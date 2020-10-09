@@ -14,6 +14,7 @@ router.use(express.static(__dirname + "./uploads/"));
  */
 
 router.post("/signup", validator.validateMeChecks, async (req, res) => {
+  console.log(req.body)
   const errors = validationResult(req).formatWith(validator.errorFormatter);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -29,13 +30,13 @@ router.post("/signup", validator.validateMeChecks, async (req, res) => {
     }
 
     user = new User({
-      fName: req.body.fName,
-      lName: req.body.lName,
+      fName: req.body.first_name,
+      lName: req.body.last_name,
       email: req.body.email,
       password: req.body.password,
-      street: req.body.street,
+      street: req.body.address,
       city: req.body.city,
-      zip: req.body.zip,
+      zip: req.body.zip_code,
       country: req.body.country,
       isDriver: req.body.isDriver
     });
@@ -50,6 +51,7 @@ router.post("/signup", validator.validateMeChecks, async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   try {
     let user = await User.findOne({ email });

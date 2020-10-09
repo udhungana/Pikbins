@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node AuthApp/index.js",
-    "client": "cd ../client/bruxaway_webapp/src && npm start",
+    "client": "cd ../frontend/frontendapp/src && npm start",
     "dev": "concurrently -n 'server,client' -c 'red,green' \"nodemon AuthApp/index.js\" \"npm run client\""
   },
   "author": "",
