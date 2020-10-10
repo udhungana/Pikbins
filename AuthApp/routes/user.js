@@ -59,7 +59,11 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
     const token = await user.generateAuthToken();
-    res.status(200).send({ token });
+    data = {
+      "token":token,
+      "isDriver": user.isDriver
+    }
+    res.status(200).send({ data });
   } catch (e) {
     console.error(e);
     res.status(500).json({
