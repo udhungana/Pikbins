@@ -1,5 +1,3 @@
-//const { Console } = require("console");
-//const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
@@ -7,49 +5,12 @@ const User = require("../model/user");
 const Task = require("../model/task");
 const Location = require("../model/location");
 const { use } = require("./user");
-//const { db } = require("../model/user");
-//const { route } = require("./user");
-//const fetch = require('node-fetch');
-//const task = require("../model/task");
 
 const googleMapsClient = require("@google/maps").createClient({
   key: "AIzaSyAJwZsfn11D8zVEscm8te2ZsygB4deaFk0",
 });
 
-// function get_nearest_location(driver_location, user_location, fn) {
-//   googleMapsClient.distanceMatrix(
-//     {
-//       origins: driver_location,
-//       destinations: user_location,
-//       units: "imperial",
-//     },
-//     function callback(status, response) {
-//       result_list = [];
-//       result_list = response.json.rows[0].elements;
-//       console.log(result_list);
-//       distance_dict = {};
-//       for (i = 0; i < result_list.length; i++) {
-//         //console.log(result_list[i])
-//         str_distance = result_list[i].distance.text;
-//         num_distance = str_distance.replace(" mi", "");
-//         distance_dict[i] = parseFloat(num_distance);
-//       }
-//       //console.log(distance_dict);
-//       //return min distance from dic
-//       min_value = Object.keys(distance_dict).reduce(function (a, b) {
-//         return distance_dict[a] < distance_dict[b] ? a : b;
-//       });
-//       //return_list = []
-//       //return_list.push(user_location[min_value])
-//       //console.log(min_value);
-//       //console.log(user_location[min_value]);
-//       //fn(return_list);
-//       fn(user_location[min_value]);
-//     }
 
-//   );
-// }
-//a = [];
 function get_nearest_location(driver_location, user_location, fn, a) {
   //console.log(a);
   if (user_location.length == 0) {
@@ -150,8 +111,8 @@ router.get("/getSchedule", auth, async (req, res) => {
   const location = street + "," + city + "," + zip + "," + country;
   task_list = await Task.find();
   var index = 0;
-  for(i = 0; i < task_list.length; i++){
-    if(task_list[i].address === location){
+  for (i = 0; i < task_list.length; i++) {
+    if (task_list[i].address === location) {
       index = i;
       break;
     }
@@ -160,35 +121,56 @@ router.get("/getSchedule", auth, async (req, res) => {
   //Find driver location to estimate time
   object1 = await Location.find();
   driver_location = object1[0].current_location;
-  driver_index = 0
-  for (i= 0; i< task_list.length; i++){
-    if (driver_location !== '1608 Blue Danube St,Arlington,76015,USA' && driver_location === task_list[i].address){
+  driver_index = 0;
+  for (i = 0; i < task_list.length; i++) {
+    if (
+      driver_location !== "1608 Blue Danube St,Arlington,76015,USA" &&
+      driver_location === task_list[i].address
+    ) {
       driver_index = i;
       break;
     }
   }
   var i = 0;
-  if (driver_index == 0 && driver_location === '1608 Blue Danube St,Arlington,76015,USA'){
+  if (
+    driver_index == 0 &&
+    driver_location === "1608 Blue Danube St,Arlington,76015,USA"
+  ) {
     i = driver_index;
-  }else{
+  } else {
     i = driver_index + 1;
   }
-  for (i; i<=index; i++){
+  for (i; i <= index; i++) {
     time += task_list[i].time;
   }
   data = {
-    "duration":time,
-    "location": location,
-    "firstName": user.fName
-  }
+    duration: time,
+    location: location,
+    firstName: user.fName,
+  };
   console.log(time);
   console.log(location);
-  res.send(data)
+  res.send(data);
 });
 
-router.post("/updateDriverLocation", auth, async (req, res)=>{
-let doc = await Location.findOneAndUpdate({driver:req.user._id},{current_location:req.body.current_location},{new:true});
-await doc.save();
-res.send(doc)
-})
+router.post("/updateDriverLocation", auth, async (req, res) => {
+  task_list = await Task.find();
+  last_location = task_list[task_list.length - 1].address;
+  let doc;
+  if (req.body.current_location === last_location) {
+    doc = await Location.findOneAndUpdate(
+      { driver: req.user._id },
+      { current_location: "1608 Blue Danube St,Arlington,76015,USA" },
+      { new: true }
+    );
+  } else {
+    doc = await Location.findOneAndUpdate(
+      { driver: req.user._id },
+      { current_location: req.body.current_location },
+      { new: true }
+    );
+  }
+  await doc.save();
+  res.send(doc);
+});
 module.exports = router;

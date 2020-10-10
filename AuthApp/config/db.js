@@ -6,7 +6,7 @@ const MONGOURI = "mongodb+srv://pickbins:Omega-3s@cluster0.dh1ez.mongodb.net/tes
 const InitiateMongoServer = async () => {
   try {
     await mongoose.connect(MONGOURI, {
-      useNewUrlParser: true, useUnifiedTopology: true
+      useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false
     });
     console.log("Connected to DB !!");
   } catch (e) {
