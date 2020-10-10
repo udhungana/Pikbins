@@ -5,6 +5,8 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const User = require("../model/user");
 const Task = require("../model/task");
+const Location = require("../model/location");
+//const { db } = require("../model/user");
 //const { route } = require("./user");
 //const fetch = require('node-fetch');
 //const task = require("../model/task");
@@ -12,6 +14,7 @@ const Task = require("../model/task");
 const googleMapsClient = require("@google/maps").createClient({
   key: "AIzaSyAJwZsfn11D8zVEscm8te2ZsygB4deaFk0",
 });
+
 // function get_nearest_location(driver_location, user_location, fn) {
 //   googleMapsClient.distanceMatrix(
 //     {
@@ -153,7 +156,23 @@ router.get("/getSchedule", auth, async (req, res) => {
     }
   }
   var time = 0;
-  for (i = 0; i<=index; i++){
+  //Find driver location to estimate time
+  object1 = await Location.find();
+  driver_location = object1[0].current_location;
+  driver_index = 0
+  for (i= 0; i< task_list.length; i++){
+    if (driver_location !== '1608 Blue Danube St,Arlington,76015,USA' && driver_location === task_list[i].address){
+      driver_index = i;
+      break;
+    }
+  }
+  var i = 0;
+  if (driver_index == 0 && driver_location === '1608 Blue Danube St,Arlington,76015,USA'){
+    i = driver_index;
+  }else{
+    i = driver_index + 1;
+  }
+  for (i; i<=index; i++){
     time += task_list[i].time;
   }
   data = {
