@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Auth from './components/auth';
 import Home from './components/home';
+import Driver from './components/driver';
 import { CookiesProvider } from 'react-cookie';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Auth />} />
             <Route path='home' element={<Home />} />
+            <Route path='driver' element={<Driver />} />
           </Routes>
         </BrowserRouter>
       </CookiesProvider>

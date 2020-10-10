@@ -1,0 +1,16 @@
+.todo {
+  color: #fff;
+  width: 300px;
+  background-color: green;
+  height: 50px;
+  margin: 50px auto;
+  border-radius: 5px;
+}
+
+.todo p {
+  padding: 10px;
+}
+
+.todo span {
+  color: red;
+}
