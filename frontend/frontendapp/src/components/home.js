@@ -31,7 +31,7 @@ const Home = () => {
 
     const [location, setLocation] = useState();
 
-    const [userName, setUserName] = useState("user");
+    const [userName, setUserName] = useState();
 
     const [dashboardClicked, setDashboardClicked] = useState(false);
 
@@ -49,23 +49,25 @@ const Home = () => {
         var today = new Date(),
             date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         setDate(date)
-        console.log(date)
 
         axios.get('/getSchedule', { headers: { "Authorization": `Bearer ${token['mr-token']}` } })
             .then((response) => {
                 console.log(response)
                 var time = 0
-                if (response.data.duration >= 60) {
-                    var hr = (response.data.duration / 60);
-                    var minutes = (response.data.duration % 60);
-                    time = (today.getHours() + hr) + ':' + (today.getMinutes() + minutes) + ':' + today.getSeconds();
+                if ((today.getMinutes() + response.data.duration) >= 60) {
+                    var hr = Math.floor((today.getMinutes() + response.data.duration) / 60);
+                    var minutes = ((today.getMinutes() + response.data.duration) % 60);
+                    var ampm = hr >= 12 ? 'pm' : 'am';
+                    time = (today.getHours() + hr) + ':' + (minutes) + ':' + today.getSeconds() + ampm;
                 }
                 else {
-                    time = today.getHours() + ':' + (today.getMinutes() + response.data.duration) + ':' + today.getSeconds();
+                    var ampm = today.getHours() >= 12 ? 'pm' : 'am';
+                    time = today.getHours() + ':' + (today.getMinutes() + response.data.duration) + ':' + today.getSeconds() + ampm;
                 }
 
                 setTime(time)
                 setLocation(response.data.location)
+                setUserName(response.data.firstName)
             })
             .catch((error) => {
                 console.log(error)
