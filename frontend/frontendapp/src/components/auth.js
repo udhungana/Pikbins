@@ -86,6 +86,7 @@ function Auth() {
                 })
                 .then((response) => {
                     console.log(response.data.token);
+                    loginClicked();
                 })
                 .catch((err) => {
                     console.log(err);

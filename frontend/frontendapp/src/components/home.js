@@ -24,6 +24,15 @@ const Home = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const [date, setDate] = useState("Oct 20");
+
+    const [time, setTime] = useState("5 pm");
+
+    const [location, setLocation] = useState("1000 driver st.");
+
+    const [userName, setUserName] = useState("user");
+
+
     useEffect(() => {
         console.log(token);
         if (!token['mr-token']) window.location.href = '/';
@@ -48,7 +57,7 @@ const Home = () => {
                     <Collapse isOpen={isOpen} navbar>
                         <Nav className="mr-auto" navbar>
                             <NavItem>
-                                <NavLink style={{ color: "green" }} href="#">Dashboard</NavLink>
+                                <NavLink style={{ color: "green" }} href="/driver">Dashboard</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink style={{ color: "green" }} href="#">Pickup Record</NavLink>
@@ -76,15 +85,58 @@ const Home = () => {
                 </Navbar>
             </div>
             <div>
-                <h1>Hey </h1>
-                <Card>
-                    <CardBody>
-                        <CardTitle>Card title</CardTitle>
-                        <CardSubtitle>Card subtitle</CardSubtitle>
-                        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                        <Button>Button</Button>
-                    </CardBody>
-                </Card>
+                <h1 style={{ color: "green" }}>Hello {userName} </h1>
+                <h2 style={{ color: "green" }}>Your next pickup is scheduled for:</h2>
+                <div
+                    style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: 20,
+                        display: "flex",
+                    }}
+                >
+                    <Card>
+                        <CardBody>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                <CardText>Date:</CardText>
+                                <CardText style={{ marginLeft: 60 }}>{date}</CardText>
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    fontWeight: "bold"
+                                }}
+                            >
+                                <CardText>Time:</CardText>
+                                <CardText style={{ marginLeft: 60 }}>{time}</CardText>
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                <CardText>Location:</CardText>
+                                <CardText style={{ marginLeft: 35 }}>{location}</CardText>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+                <p style={{ color: "green", fontWeight: "bold" }}>
+                    Missed Your Pickup?Don't Worry
+        </p>
+                <p style={{ color: "green", fontWeight: "bold" }}>
+                    Just Send us Pickup Request
+        </p>
+                {/* <Button color="success">Request Again</Button> */}
             </div>
         </>
     );
