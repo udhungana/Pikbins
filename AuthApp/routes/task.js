@@ -1,11 +1,13 @@
-const { Console } = require("console");
-const { response } = require("express");
+//const { Console } = require("console");
+//const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const User = require("../model/user");
-const { route } = require("./user");
-const fetch = require('node-fetch');
+const Task = require("../model/task");
+//const { route } = require("./user");
+//const fetch = require('node-fetch');
+//const task = require("../model/task");
 
 const googleMapsClient = require("@google/maps").createClient({
   key: "AIzaSyAJwZsfn11D8zVEscm8te2ZsygB4deaFk0",
@@ -45,7 +47,6 @@ const googleMapsClient = require("@google/maps").createClient({
 // }
 //a = [];
 function get_nearest_location(driver_location, user_location, fn, a) {
-  
   //console.log(a);
   if (user_location.length == 0) {
     fn(a);
@@ -65,25 +66,34 @@ function get_nearest_location(driver_location, user_location, fn, a) {
         for (i = 0; i < result_list.length; i++) {
           //console.log(result_list[i])
           str_distance = result_list[i].distance.text;
-          num_distance = str_distance.replace(" mi", "");
-          distance_dict[i] = parseFloat(num_distance);
+          str_time = result_list[i].duration.text;
+          num_distance = parseFloat(str_distance.replace(" mi", ""));
+          num_time = parseFloat(str_time.replace(" mins", ""));
+          b = [];
+          b.push(num_distance);
+          b.push(num_time);
+          distance_dict[i] = b;
         }
         //console.log(distance_dict);
         //return min distance from dic
         min_value = Object.keys(distance_dict).reduce(function (a, b) {
-          return distance_dict[a] < distance_dict[b] ? a : b;
+          return distance_dict[a][0] < distance_dict[b][0] ? a : b;
         });
 
         //console.log(user_location);
         d_location = user_location[min_value];
-        a.push(d_location);
+        x = [];
+        x.push(d_location);
+        x.push(distance_dict[min_value][1]);
+        //a[d_location] = distance_dict[min_value][1];
+        a.push(x);
         user_location.splice(min_value, 1);
         get_nearest_location(d_location, user_location, fn, a);
       }
     );
   }
 }
-router.get("/getTask", async (req, res) => {
+router.get("/generateTask", async (req, res) => {
   driver = await User.findOne({ email: "driver1@pickbins.com" });
   const street = driver.street;
   const city = driver.city;
@@ -102,10 +112,56 @@ router.get("/getTask", async (req, res) => {
     const location = street + "," + city + "," + zip + "," + country;
     user_location.push(location);
   }
+  //console.log(user_list)
   //console.log(user_location)
-  get_nearest_location(driver_location, user_location, function (result) {
-    res.send(result)
-  },[]);
+  get_nearest_location(
+    driver_location,
+    user_location,
+    async function (result) {
+      for (i = 0; i < result.length; i++) {
+        const task = new Task({
+          address: result[i][0],
+          time: result[i][1],
+        });
+        await task.save();
+      }
+      res.status(200);
+    },
+    []
+  );
 });
 
+router.get("/getTask", async (req, res) => {
+  task_list = await Task.find();
+  //console.log(task_list);
+  res.send(task_list);
+});
+
+router.get("/getSchedule", auth, async (req, res) => {
+  const user = await User.findOne({ _id: req.user._id });
+  const street = user.street;
+  const city = user.city;
+  const zip = user.zip;
+  const country = user.country;
+  const location = street + "," + city + "," + zip + "," + country;
+  task_list = await Task.find();
+  var index = 0;
+  for(i = 0; i < task_list.length; i++){
+    if(task_list[i].address === location){
+      index = i;
+      break;
+    }
+  }
+  var time = 0;
+  for (i = 0; i<=index; i++){
+    time += task_list[i].time;
+  }
+  data = {
+    "duration":time,
+    "location": location
+  }
+  console.log(time);
+  console.log(location);
+  res.send(data)
+});
 module.exports = router;
