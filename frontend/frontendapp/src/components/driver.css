@@ -1,16 +1,27 @@
 .todo {
   color: #fff;
-  width: 300px;
+  width: 500px;
   background-color: green;
-  height: 50px;
-  margin: 50px auto;
+  height: 80px;
+  margin: 20px auto;
   border-radius: 5px;
+  text-align: center;
 }
 
 .todo p {
-  padding: 10px;
+  padding: 22px;
+  position: relative;
 }
 
-.todo span {
+.todo p span {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+.faicons {
+  margin: 0 5px;
+  font-size: 15px;
   color: red;
+  background-color: red;
 }

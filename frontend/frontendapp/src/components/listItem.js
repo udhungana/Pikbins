@@ -1,13 +1,17 @@
 import React from 'react';
 import './driver.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
 //const ListItem = props => {
-function TodoItem({ todo }) {
+
+function TodoItem(props) {
     return (
         <div className="todo">
-            <p>{todo.address}
+            <p>{props.todo.address}
                 <span>
-                    <FontAwesomeIcon width='50px' height='50px' className="faicons" icon='trash' />
+                    <FontAwesomeIcon icon={faTrash} onClick={props.deleteItem} />
                 </span>
             </p>
         </div>
