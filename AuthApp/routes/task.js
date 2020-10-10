@@ -183,4 +183,10 @@ router.get("/getSchedule", auth, async (req, res) => {
   console.log(location);
   res.send(data)
 });
+
+router.post("/updateDriverLocation", auth, async (req, res)=>{
+let doc = await Location.findOneAndUpdate({driver:req.user._id},{current_location:req.body.current_location},{new:true});
+await doc.save();
+res.send(doc)
+})
 module.exports = router;
