@@ -6,6 +6,7 @@ const auth = require("../middleware/auth");
 const User = require("../model/user");
 const Task = require("../model/task");
 const Location = require("../model/location");
+const { use } = require("./user");
 //const { db } = require("../model/user");
 //const { route } = require("./user");
 //const fetch = require('node-fetch');
@@ -177,7 +178,8 @@ router.get("/getSchedule", auth, async (req, res) => {
   }
   data = {
     "duration":time,
-    "location": location
+    "location": location,
+    "firstName": user.fName
   }
   console.log(time);
   console.log(location);
