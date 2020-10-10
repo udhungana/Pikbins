@@ -60,10 +60,10 @@ router.post("/login", async (req, res) => {
     }
     const token = await user.generateAuthToken();
     data = {
-      "token":token,
+      "token": token,
       "isDriver": user.isDriver
     }
-    res.status(200).send({ data });
+    res.status(200).send(data);
   } catch (e) {
     console.error(e);
     res.status(500).json({

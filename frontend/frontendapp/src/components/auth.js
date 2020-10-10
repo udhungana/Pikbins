@@ -27,15 +27,11 @@ function Auth() {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
 
+    const [isDriver, setIsDriver] = useState(false);
     const [isLoginView, setIsLoginView] = useState(true);
     const [alertView, setAlertView] = useState(false);
     const [passwordView, setPasswordView] = useState(false);
     const [token, setToken] = useCookies(["mr-token"]);
-
-    useEffect(() => {
-        console.log(token);
-        if (token["mr-token"]) window.location.href = "/home";
-    }, [token]);
 
     const loginClicked = () => {
         axios
@@ -43,7 +39,16 @@ function Auth() {
                 email,
                 password
             })
-            .then((response) => setToken("mr-token", response.data.token))
+            .then((response) => {
+                setToken("mr-token", response.data.token)
+                console.log('mr-token')
+                console.log(response.data.token)
+                setIsDriver(response.data.isDriver)
+                console.log('isDriver')
+                console.log(response.data.isDriver)
+                console.log(isDriver)
+            })
+
             .catch((err) => {
                 console.log(err);
             });
@@ -93,6 +98,10 @@ function Auth() {
                 });
         }
     };
+
+    useEffect(() => {
+        if (token["mr-token"]) window.location.href = "/home";
+    }, [token]);
 
     return (
         <Form className="login-form">

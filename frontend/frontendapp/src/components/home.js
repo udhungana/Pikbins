@@ -93,7 +93,7 @@ const Home = () => {
                                 <NavLink style={{ color: "green" }} href="#" onClick={onDashboardClicked}>Dashboard</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink style={{ color: "green" }} href="/driver">Pickup Record</NavLink>
+                                <NavLink style={{ color: "green" }} href="/driver">Pickups</NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle style={{ color: "green" }} nav caret>
