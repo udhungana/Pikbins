@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function TodoItem({ todo }) {
     return (
         <div className="todo">
-            <p>{todo.address}</p>
-            <span>
-                <FontAwesomeIcon className="faicons" icon='trash' />
-            </span>
+            <p>{todo.address}
+                <span>
+                    <FontAwesomeIcon width='50px' height='50px' className="faicons" icon='trash' />
+                </span>
+            </p>
         </div>
     );
 };
