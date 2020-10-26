@@ -108,12 +108,13 @@ router.get("/generateTask", async (req, res) => {
         var time = result[i][1];
         Task.findOneAndUpdate(
           { driver: req.body.driverID },
-          {$push:{
-            path: {
-              address: address,
-              time: time,
+          {
+            $push: {
+              path: {
+                address: address,
+                time: time,
+              },
             },
-          }
           },
           function (err, success) {
             if (err) {
@@ -132,7 +133,7 @@ router.get("/generateTask", async (req, res) => {
 });
 
 router.get("/getTask", async (req, res) => {
-  const task_list = await Task.findOne({driver:req.body.driverID});
+  const task_list = await Task.findOne({ driver: req.body.driverID });
   //console.log(task_list);
   res.send(task_list);
 });
@@ -144,10 +145,13 @@ router.get("/getSchedule", auth, async (req, res) => {
   const zip = user.zip;
   const country = user.country;
   const location = street + "," + city + "," + zip + "," + country;
-  task_list = await Task.find();
+  const driver = await DriverCustomerList.findOne({ customers: req.user._id });
+  //console.log(driver);
+  task_list = await Task.findOne({ driver: driver.driver });
+  //console.log(task_list);
   var index = 0;
-  for (i = 0; i < task_list.length; i++) {
-    if (task_list[i].address === location) {
+  for (i = 0; i < task_list.path.length; i++) {
+    if (task_list.path[i].address === location) {
       index = i;
       break;
     }
@@ -157,10 +161,10 @@ router.get("/getSchedule", auth, async (req, res) => {
   object1 = await Location.find();
   driver_location = object1[0].current_location;
   driver_index = 0;
-  for (i = 0; i < task_list.length; i++) {
+  for (i = 0; i < task_list.path.length; i++) {
     if (
       driver_location !== "1608 Blue Danube St,Arlington,76015,USA" &&
-      driver_location === task_list[i].address
+      driver_location === task_list.path[i].address
     ) {
       driver_index = i;
       break;
@@ -176,26 +180,43 @@ router.get("/getSchedule", auth, async (req, res) => {
     i = driver_index + 1;
   }
   for (i; i <= index; i++) {
-    time += task_list[i].time;
+    time += task_list.path[i].time;
   }
   data = {
     duration: time,
     location: location,
     firstName: user.fName,
   };
-  console.log(time);
-  console.log(location);
+  //console.log(time);
+  //console.log(location);
   res.send(data);
 });
 
 router.post("/updateDriverLocation", auth, async (req, res) => {
-  task_list = await Task.find();
-  last_location = task_list[task_list.length - 1].address;
+  task_list = await Task.find({ driver: req.user._id });
+  //console.log(task_list);
+  const path_list = task_list[0].path;
+  //console.log(path_list);
+  last_location = path_list[path_list.length - 1].address;
   let doc;
   if (req.body.current_location === last_location) {
+    const hasLocation = await Location.findOne({ driver: req.user._id });
+    if (!hasLocation) {
+      const new_driver = new Location({ driver: req.user._id });
+      await new_driver.save();
+    }
+    //starting location for a driver is location they use during sign up.
+    // In other words, it can be their home address.
+    const temp_driver = await User.findOne({ _id: req.user._id });
+    const street = temp_driver.street;
+    const city = temp_driver.city;
+    const zip = temp_driver.zip;
+    const country = temp_driver.country;
+    const location = street + "," + city + "," + zip + "," + country;
+
     doc = await Location.findOneAndUpdate(
       { driver: req.user._id },
-      { current_location: "1608 Blue Danube St,Arlington,76015,USA" },
+      { current_location: location },
       { new: true }
     );
   } else {
