@@ -4,12 +4,11 @@ const auth = require("../middleware/auth");
 const User = require("../model/user");
 const Task = require("../model/task");
 const Location = require("../model/location");
-const { use } = require("./user");
+const DriverCustomerList = require("../model/driverCustomerList");
 
 const googleMapsClient = require("@google/maps").createClient({
   key: "AIzaSyAJwZsfn11D8zVEscm8te2ZsygB4deaFk0",
 });
-
 
 function get_nearest_location(driver_location, user_location, fn, a) {
   //console.log(a);
@@ -59,41 +58,77 @@ function get_nearest_location(driver_location, user_location, fn, a) {
   }
 }
 router.get("/generateTask", async (req, res) => {
-  driver = await User.findOne({ email: "driver1@pickbins.com" });
+  const dcList = await DriverCustomerList.findOne({
+    driver: req.body.driverID,
+  });
+  //find driver location
+  const driver = await User.findOne({ _id: dcList.driver });
   const street = driver.street;
   const city = driver.city;
   const zip = driver.zip;
   const country = driver.country;
   const driver_location = street + "," + city + "," + zip + "," + country;
-  //console.log(driver_location)
 
-  user_list = await User.find({ isDriver: false });
+  //Get user location associated with the driver
+  const users = dcList.customers;
   user_location = [];
-  for (i = 0; i < user_list.length; i++) {
-    const street = user_list[i].street;
-    const city = user_list[i].city;
-    const zip = user_list[i].zip;
-    const country = user_list[i].country;
+  for (i = 0; i < users.length; i++) {
+    const user = await User.findOne({ _id: users[i] });
+    const street = user.street;
+    const city = user.city;
+    const zip = user.zip;
+    const country = user.country;
     const location = street + "," + city + "," + zip + "," + country;
     user_location.push(location);
   }
-  //console.log(user_list)
-  //console.log(user_location)
+  const doc = await Task.findOne({ driver: req.body.driverID });
+  if (!doc) {
+    const task = new Task({
+      driver: req.body.driverID,
+    });
+    await task.save();
+  }
+
+  //find optimal routes and store it in task collection
   get_nearest_location(
     driver_location,
     user_location,
     async function (result) {
+      Task.findOneAndUpdate(
+        { driver: req.body.driverID },
+        { path: [] },
+        { upsert: true },
+        function (err, doc) {
+          //console.log(doc);
+        }
+      );
+      //console.log(result);
       for (i = 0; i < result.length; i++) {
-        const task = new Task({
-          address: result[i][0],
-          time: result[i][1],
-        });
-        await task.save();
+        var address = result[i][0];
+        var time = result[i][1];
+        Task.findOneAndUpdate(
+          { driver: req.body.driverID },
+          {$push:{
+            path: {
+              address: address,
+              time: time,
+            },
+          }
+          },
+          function (err, success) {
+            if (err) {
+              //console.log(err);
+            } else {
+              //console.log(success);
+            }
+          }
+        );
+        //res.status(200);
       }
-      res.status(200);
     },
     []
   );
+  res.send("task created");
 });
 
 router.get("/getTask", async (req, res) => {
