@@ -132,7 +132,7 @@ router.get("/generateTask", async (req, res) => {
 });
 
 router.get("/getTask", async (req, res) => {
-  task_list = await Task.find();
+  const task_list = await Task.findOne({driver:req.body.driverID});
   //console.log(task_list);
   res.send(task_list);
 });
