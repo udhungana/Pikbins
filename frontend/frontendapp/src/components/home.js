@@ -128,7 +128,7 @@ const Home = () => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink style={{ color: "green" }} href="/adminDriver">
+                <NavLink style={{ color: "green" }} href="/adminHome">
                   Admin
                 </NavLink>
               </NavItem>
