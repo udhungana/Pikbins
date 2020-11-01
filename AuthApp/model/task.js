@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 const TaskSchema = mongoose.Schema({
-    address: {
-        type: String,
-        required: true
+  driver: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  path: [
+    {
+      address: String,
+      time: Number,
     },
-    time: {
-        type: Number,
-        required: true
-    }
+  ],
 });
 
 module.exports = mongoose.model("task", TaskSchema);

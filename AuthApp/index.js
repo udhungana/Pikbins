@@ -2,11 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const user = require("./routes/user"); //new addition
 const task = require("./routes/task")
-//const doctor = require("./routes/doctor");
-//const patient = require("./routes/patients");
+const admin = require("./routes/admin");
 const InitiateMongoServer = require("./config/db");
 const { urlencoded } = require("body-parser");
-//const PatientData = require("./model/patientData");
 const User = require("./model/user");
 const socket = require("socket.io");
 const mongoose = require("mongoose")
@@ -34,7 +32,7 @@ app.get("/", (req, res) => {
  */
 app.use("/user", user);
 app.use(task);
-//app.use(patient);
+app.use(admin);
 
 var server = app.listen(PORT, (req, res) => {
   console.log(`Server Started at PORT ${PORT}`);
