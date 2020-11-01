@@ -26,7 +26,17 @@ import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
 
 const AdminUser = () => {
+  const [token, setToken, deleteToken] = useCookies(["mr-token"]);
+  console.log("hello");
+  axios
+    .get("/getSchedule", {
+      headers: { Authorization: `Bearer ${token["mr-token"]}` },
+    })
+    .then((response) => {
+      console.log(response);
+    });
   const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
+
   return (
     <div>
       <p

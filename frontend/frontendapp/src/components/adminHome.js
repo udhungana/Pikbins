@@ -5,6 +5,8 @@ import axios from "axios";
 // import { Sidenav, Nav, Icon, Button } from "rsuite";
 import { Nav, NavItem, NavLink, Table } from "reactstrap";
 import Divider from "@material-ui/core/Divider";
+import Icon from "@material-ui/core/Icon";
+import { ListGroup, ListGroupItem } from "reactstrap";
 
 function AdminHome() {
   var array = [
@@ -16,21 +18,25 @@ function AdminHome() {
 
   const [mappableFields, setMappableFields] = useState([]);
 
-  useEffect(() => {
-    if (array && array.length > 0) {
-      setMappableFields(Object.getOwnPropertyNames(array[0]));
-    }
-  }, [array]);
+  // const adminUserClicked = () => {
+  //   console.log("hello");
+  //   axios.get("/getCustomer").then((response) => {
+  //     console.log(response);
+  //   });
+  // };
 
   return (
     <div>
       <p
         style={{
-          borderBottom: "5px solid green",
+          // borderBottom: "5px solid green",
+          borderRight: "1px solid #C0C0C0",
           marginBottom: 0,
+          height: 80,
+          width: 185,
         }}
       >
-        <img src={logo} width="40" height="40" /> {"  "}Pick Bins Admin
+        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
       </p>
       <div className="row">
         <Nav vertical pills style={navDesign}>
@@ -40,12 +46,12 @@ function AdminHome() {
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/adminDriver" style={textStl}>
+            <NavLink href="/adminUser" style={textStl}>
               Users
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/adminUser" style={textStl}>
+            <NavLink href="/adminDriver" style={textStl}>
               Drivers
             </NavLink>
           </NavItem>
@@ -70,15 +76,15 @@ function AdminHome() {
           <tbody>
             {array.map((data, index) => (
               <tr key={index}>
-                {mappableFields.map((header, idx) => (
-                  <td key={idx}>{data[header]}</td>
-                ))}
+                <td>{data.address}</td>
+                <td>{data.driver}</td>
+                <td>{data.status}</td>
               </tr>
             ))}
           </tbody>
         </Table>
-        {/* add table/other content in each page  upto here */}
       </div>
+      {/* add table/other content in each page  upto here */}
     </div>
   );
 }
@@ -107,4 +113,5 @@ const navDesign = {
   height: 700,
   backgroundColor: "white",
   borderRight: "1px solid #C0C0C0",
+  marginTop: 10,
 };
