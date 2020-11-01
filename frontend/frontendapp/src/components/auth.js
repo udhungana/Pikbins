@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Col,
-  Row,
-  Alert,
-} from "reactstrap";
+import { Button, Form, FormGroup, Input, Col, Row, Alert } from "reactstrap";
 import "./form.css";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";

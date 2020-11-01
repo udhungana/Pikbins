@@ -23,13 +23,98 @@ import {
 } from "reactstrap";
 import logo from "../assets/logo.png";
 import axios from "axios";
-import { Table } from "rsuite";
+import { ListGroup, ListGroupItem } from "reactstrap";
 
-const adminGenerateList = () => {
+const AdminGenerateList = () => {
+  const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
   return (
     <div>
-      <p>adminGenerateList</p>
+      <p
+        style={{
+          borderBottom: "5px solid green",
+          marginBottom: 0,
+        }}
+      >
+        <img src={logo} width="40" height="40" /> {"  "}Pick Bins Admin
+      </p>
+      <div className="row">
+        <Nav vertical pills style={navDesign}>
+          <NavItem>
+            <NavLink href="/adminHome" style={textStl}>
+              Admin Home
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/adminDriver" style={textStl}>
+              Users
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/adminUser" style={textStl}>
+              Drivers
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/adminGenerateList" style={textStl}>
+              Generate List
+            </NavLink>
+          </NavItem>
+        </Nav>
+        {/* add table/other content in each page after this */}
+        <div>
+          {data.map((driver, index) => {
+            return (
+              <ListGroup
+                key={index}
+                style={{
+                  margin: 20,
+                }}
+              >
+                <ListGroupItem
+                  style={{
+                    width: 500,
+                    justifyContent: "left",
+                    alignItems: "flex-start",
+                    alignContent: "flex-start",
+                  }}
+                >
+                  {driver}
+                  <Button color="success" style={{ marginLeft: 80 }}>
+                    Generate
+                  </Button>
+                </ListGroupItem>
+              </ListGroup>
+            );
+          })}
+        </div>
+        {/* add table/other content in each page  upto here */}
+      </div>
     </div>
   );
 };
-export default adminGenerateList;
+export default AdminGenerateList;
+
+const textStl = {
+  color: "green",
+  backgroundColor: "white",
+  width: 190,
+  margin: 4,
+  borderBottom: "1px solid #C0C0C0",
+};
+
+const brandStl = {
+  color: "green",
+  backgroundColor: "white",
+  width: 190,
+  margin: 5,
+  marginTop: 0,
+};
+
+const navDesign = {
+  alignItems: "flex-start",
+  justifyContent: "left",
+  width: 200,
+  height: 700,
+  backgroundColor: "white",
+  borderRight: "1px solid #C0C0C0",
+};

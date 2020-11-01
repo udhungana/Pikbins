@@ -5,10 +5,10 @@ import Auth from "./components/auth";
 import Home from "./components/home";
 import Driver from "./components/driver";
 import { CookiesProvider } from "react-cookie";
-import adminHome from "./components/adminHome";
-import adminDriver from "./components/adminDriver";
-import adminUser from "./components/adminUser";
-import adminGenerateList from "./components/adminGenerateList";
+import AdminHome from "./components/adminHome";
+import AdminDriver from "./components/adminDriver";
+import AdminUser from "./components/adminUser";
+import AdminGenerateList from "./components/adminGenerateList";
 
 function App() {
   return (
@@ -19,10 +19,10 @@ function App() {
             <Route path="/" element={<Auth />} />
             <Route path="home" element={<Home />} />
             <Route path="driver" element={<Driver />} />
-            <Route path="adminHome" element={<adminHome />} />
-            <Route path="adminDriver" element={<adminDriver />} />
-            <Route path="adminUser" element={<adminUser />} />
-            <Route path="adminGenerateList" element={<adminGenerateList />} />
+            <Route path="adminHome" element={<AdminHome />} />
+            <Route path="adminDriver" element={<AdminDriver />} />
+            <Route path="adminUser" element={<AdminUser />} />
+            <Route path="adminGenerateList" element={<AdminGenerateList />} />
           </Routes>
         </BrowserRouter>
       </CookiesProvider>
