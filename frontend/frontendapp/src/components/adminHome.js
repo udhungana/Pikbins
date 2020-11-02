@@ -7,13 +7,30 @@ import { Nav, NavItem, NavLink, Table } from "reactstrap";
 import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 import { ListGroup, ListGroupItem } from "reactstrap";
+import SideBarNav from "./sidebarNav";
 
 function AdminHome() {
   var array = [
-    { address: "John", driver: "lol", status: "done" },
-    { address: "murphy", driver: "love", status: "done" },
-    { address: "eltom", driver: "awol", status: "done" },
-    { address: "sailesh", driver: "hate", status: "pending" },
+    {
+      address: "1000 mary st. , Irving, Texas",
+      driver: "Utsav",
+      status: "done",
+    },
+    {
+      address: "5016 courside dr, Texas, Jhapa",
+      driver: "Himal",
+      status: "pending",
+    },
+    {
+      address: "2200 walnut hill, Texas, Arlington",
+      driver: "Bipul",
+      status: "done",
+    },
+    {
+      address: "1068 blue diamond st., Texas, Syanja",
+      driver: "Suyash",
+      status: "pending",
+    },
   ];
 
   const [mappableFields, setMappableFields] = useState([]);
@@ -39,29 +56,9 @@ function AdminHome() {
         <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
       </p>
       <div className="row">
-        <Nav vertical pills style={navDesign}>
-          <NavItem>
-            <NavLink href="/adminHome" style={textStl}>
-              Admin Home
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminUser" style={textStl}>
-              Users
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminDriver" style={textStl}>
-              Drivers
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminGenerateList" style={textStl}>
-              Generate List
-            </NavLink>
-          </NavItem>
-        </Nav>
+        <SideBarNav />
         {/* add table/other content in each page after this */}
+
         <Table
           striped
           style={{ flex: 0.9, margin: 20, border: "1px solid #C0C0C0" }}

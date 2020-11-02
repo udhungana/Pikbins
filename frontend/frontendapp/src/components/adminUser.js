@@ -24,68 +24,57 @@ import {
 import logo from "../assets/logo.png";
 import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
+import SideBarNav from "./sidebarNav";
 
 const AdminUser = () => {
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
-  console.log("hello");
-  axios
-    .get("/getSchedule", {
-      headers: { Authorization: `Bearer ${token["mr-token"]}` },
-    })
-    .then((response) => {
-      console.log(response);
-    });
-  const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
+  const [listM, setlistM] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("/getCustomer")
+      .then((response) => {
+        setlistM(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <div>
       <p
         style={{
-          borderBottom: "5px solid green",
+          // borderBottom: "5px solid green",
+          borderRight: "1px solid #C0C0C0",
           marginBottom: 0,
+          height: 80,
+          width: 185,
         }}
       >
-        <img src={logo} width="40" height="40" /> {"  "}Pick Bins Admin
+        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
       </p>
       <div className="row">
-        <Nav vertical pills style={navDesign}>
-          <NavItem>
-            <NavLink href="/adminHome" style={textStl}>
-              Admin Home
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminDriver" style={textStl}>
-              Users
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminUser" style={textStl}>
-              Drivers
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="/adminGenerateList" style={textStl}>
-              Generate List
-            </NavLink>
-          </NavItem>
-        </Nav>
+        <div>
+          <SideBarNav />
+        </div>
         {/* add table/other content in each page after this */}
         <div>
-          {data.map((driver, index) => {
-            return (
-              <ListGroup
-                key={index}
-                style={{
-                  margin: 20,
-                }}
-              >
-                <ListGroupItem>{driver}</ListGroupItem>
-              </ListGroup>
-            );
-          })}
+          {listM.map((user, index) => (
+            // <p key={index}>{user.fname}</p>
+
+            <ListGroup
+              key={index}
+              style={{
+                margin: 20,
+              }}
+            >
+              <ListGroupItem>{user.fName}</ListGroupItem>
+              {console.log(user.fName)}
+            </ListGroup>
+          ))}
+          {/* // <p>{listM[0].fname}</p> */}
+          {/* add table/other content in each page  upto here */}
         </div>
-        {/* add table/other content in each page  upto here */}
       </div>
     </div>
   );
