@@ -3,28 +3,43 @@ import { useCookies } from "react-cookie";
 import logo from "../assets/logo.png";
 import axios from "axios";
 // import { Sidenav, Nav, Icon, Button } from "rsuite";
-import { Nav, NavItem, NavLink, Table } from "reactstrap";
+import { Nav, NavItem, NavLink, Table, Navbar } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faUser,
+  faTruck,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
 
 const SideBarNav = () => {
   return (
-    <Nav vertical pills style={navDesign}>
+    <Nav vertical style={navDesign}>
       <NavItem>
         <NavLink href="/adminHome" style={textStl}>
+          <FontAwesomeIcon icon={faHome} />
+          {"   "}
           Admin Home
         </NavLink>
       </NavItem>
       <NavItem>
         <NavLink href="/adminUser" style={textStl}>
+          <FontAwesomeIcon icon={faUser} />
+          {"   "}
           Users
         </NavLink>
       </NavItem>
       <NavItem>
         <NavLink href="/adminDriver" style={textStl}>
+          <FontAwesomeIcon icon={faTruck} />
+          {"   "}
           Drivers
         </NavLink>
       </NavItem>
       <NavItem>
         <NavLink href="/adminGenerateList" style={textStl}>
+          <FontAwesomeIcon icon={faList} />
+          {"   "}
           Generate List
         </NavLink>
       </NavItem>
@@ -38,7 +53,7 @@ const textStl = {
   color: "green",
   backgroundColor: "white",
   width: 190,
-  margin: 4,
+  marginTop: 4,
   borderBottom: "1px solid #C0C0C0",
 };
 
@@ -51,11 +66,12 @@ const brandStl = {
 };
 
 const navDesign = {
-  alignItems: "flex-start",
+  display: "flex",
   justifyContent: "left",
+  alignItems: "flex-start",
   width: 200,
-  height: 700,
+  height: 500,
+  border: "1px solid #C0C0C0",
   backgroundColor: "white",
-  borderRight: "1px solid #C0C0C0",
-  marginTop: 10,
+  marginTop: 0,
 };

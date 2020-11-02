@@ -26,38 +26,48 @@ import axios from "axios";
 import { Table } from "rsuite";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
+import BrandHeader from "./brandHeader";
 
 const AdminDriver = () => {
+  const [listM, setlistM] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/getDriver")
+      .then((response) => {
+        setlistM(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
   return (
     <div>
-      <p
-        style={{
-          // borderBottom: "5px solid green",
-          borderRight: "1px solid #C0C0C0",
-          marginBottom: 0,
-          height: 80,
-          width: 185,
-        }}
-      >
-        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
-      </p>
+      <BrandHeader />
       <div className="row">
         <SideBarNav />
         {/* add table/other content in each page after this */}
         <div>
-          {data.map((driver, index) => {
-            return (
-              <ListGroup
-                key={index}
-                style={{
-                  margin: 20,
-                }}
-              >
-                <ListGroupItem>{driver}</ListGroupItem>
-              </ListGroup>
-            );
-          })}
+          {listM.map((driver, index) => (
+            <ListGroup
+              key={index}
+              style={{
+                margin: 20,
+              }}
+            >
+              <ListGroupItem>
+                <strong>Name:</strong> {driver.fName} {driver.lName}
+                <br />
+                <strong>Address:</strong> {driver.street}
+                <br />
+                <strong>Email:</strong> {driver.email}
+              </ListGroupItem>
+            </ListGroup>
+          ))}
+          {/* add table/other content in each page  upto here */}
         </div>
         {/* add table/other content in each page  upto here */}
       </div>

@@ -25,6 +25,7 @@ import logo from "../assets/logo.png";
 import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
+import BrandHeader from "./brandHeader";
 
 const AdminUser = () => {
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
@@ -35,6 +36,7 @@ const AdminUser = () => {
       .get("/getCustomer")
       .then((response) => {
         setlistM(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -42,37 +44,29 @@ const AdminUser = () => {
   }, []);
   return (
     <div>
-      <p
-        style={{
-          // borderBottom: "5px solid green",
-          borderRight: "1px solid #C0C0C0",
-          marginBottom: 0,
-          height: 80,
-          width: 185,
-        }}
-      >
-        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
-      </p>
+      <BrandHeader />
       <div className="row">
-        <div>
+        <div className="clearfix">
           <SideBarNav />
         </div>
         {/* add table/other content in each page after this */}
         <div>
           {listM.map((user, index) => (
-            // <p key={index}>{user.fname}</p>
-
             <ListGroup
               key={index}
               style={{
                 margin: 20,
               }}
             >
-              <ListGroupItem>{user.fName}</ListGroupItem>
-              {console.log(user.fName)}
+              <ListGroupItem>
+                <strong>Name:</strong> {user.fName} {user.lName}
+                <br />
+                <strong>Address:</strong> {user.street}
+                <br />
+                <strong>Email:</strong> {user.email}
+              </ListGroupItem>
             </ListGroup>
           ))}
-          {/* // <p>{listM[0].fname}</p> */}
           {/* add table/other content in each page  upto here */}
         </div>
       </div>

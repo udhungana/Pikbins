@@ -25,27 +25,32 @@ import logo from "../assets/logo.png";
 import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
+import BrandHeader from "./brandHeader";
 
 const AdminGenerateList = () => {
+  const [listM, setlistM] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/getDriver")
+      .then((response) => {
+        setlistM(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
   return (
     <div>
-      <p
-        style={{
-          // borderBottom: "5px solid green",
-          borderRight: "1px solid #C0C0C0",
-          marginBottom: 0,
-          height: 80,
-          width: 185,
-        }}
-      >
-        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
-      </p>
+      <BrandHeader />
       <div className="row">
         <SideBarNav />
         {/* add table/other content in each page after this */}
         <div>
-          {data.map((driver, index) => {
+          {listM.map((driver, index) => {
             return (
               <ListGroup
                 key={index}
@@ -61,9 +66,9 @@ const AdminGenerateList = () => {
                     alignContent: "flex-start",
                   }}
                 >
-                  {driver}
+                  {driver.fName} {driver.lName}
                   <Button color="success" style={{ marginLeft: 80 }}>
-                    Generate
+                    Generate Task
                   </Button>
                 </ListGroupItem>
               </ListGroup>

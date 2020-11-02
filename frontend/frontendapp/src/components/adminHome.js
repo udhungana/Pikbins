@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
+import BrandHeader from "./brandHeader";
 
 function AdminHome() {
   var array = [
@@ -44,24 +45,19 @@ function AdminHome() {
 
   return (
     <div>
-      <p
-        style={{
-          // borderBottom: "5px solid green",
-          borderRight: "1px solid #C0C0C0",
-          marginBottom: 0,
-          height: 80,
-          width: 185,
-        }}
-      >
-        <img style={{ marginTop: 5 }} src={logo} width="80" height="80" />
-      </p>
+      <BrandHeader />
       <div className="row">
         <SideBarNav />
         {/* add table/other content in each page after this */}
-
         <Table
           striped
-          style={{ flex: 0.9, margin: 20, border: "1px solid #C0C0C0" }}
+          style={{
+            flex: 0.9,
+            marginLeft: 20,
+            marginTop: 2,
+            border: "1px solid #C0C0C0",
+            textAlign: "left",
+          }}
         >
           <thead>
             <tr>
@@ -81,7 +77,6 @@ function AdminHome() {
           </tbody>
         </Table>
       </div>
-      {/* add table/other content in each page  upto here */}
     </div>
   );
 }
