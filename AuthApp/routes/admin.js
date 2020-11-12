@@ -5,12 +5,12 @@ const User = require("../model/user");
 const DriverCustomer = require("../model/driverCustomerList");
 
 router.get("/getDriver", async (req, res) => {
-  const drivers = await User.find({ isDriver: true });
+  const drivers = await User.find({ isDriver: true, isAdmin: false });
   res.send(drivers);
 });
 
 router.get("/getCustomer", async (req, res) => {
-  const drivers = await User.find({ isDriver: false });
+  const drivers = await User.find({ isDriver: false, isAdmin: false });
   res.send(drivers);
 });
 
@@ -28,7 +28,7 @@ router.post("/categorizeCustomer", async (req, res) => {
   }
   
   const driver_location = req.body.location;
-  const users = await User.find({ city: driver_location, isDriver: false });
+  const users = await User.find({ city: driver_location, isDriver: false, isAdmin: false });
   //console.log(users);
   for (i = 0; i < users.length; i++) {
       userID = users[i]._id;
