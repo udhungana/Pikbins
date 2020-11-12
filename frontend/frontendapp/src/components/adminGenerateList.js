@@ -42,7 +42,6 @@ const AdminGenerateList = () => {
       });
   }, []);
 
-  const data = ["Tom", "Hardy", "Cillian", "Murphy", "James", "Bond"];
   return (
     <div>
       <BrandHeader />
