@@ -20,7 +20,7 @@ function Driver() {
   useEffect(() => {
     // Run! Like go get some data from an API.
     axios
-      .get("/getTask")
+      .post("/getTask", { headers: { Authorization: `Bearer ${token["mr-token"]}` } })
       .then((response) => {
         setTodos(response.data);
       })
