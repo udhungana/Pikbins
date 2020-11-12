@@ -132,8 +132,8 @@ router.get("/generateTask", async (req, res) => {
   res.send("task created");
 });
 
-router.get("/getTask", async (req, res) => {
-  const task_list = await Task.findOne({ driver: req.body.driverID });
+router.get("/getTask", auth, async (req, res) => {
+  const task_list = await Task.findOne({ driver: req.user._id });
   //console.log(task_list);
   res.send(task_list);
 });
