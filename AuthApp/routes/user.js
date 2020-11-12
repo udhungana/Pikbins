@@ -36,6 +36,7 @@ router.post("/signup", validator.validateMeChecks, async (req, res) => {
       zip: req.body.zip_code,
       country: req.body.country,
       isDriver: req.body.isDriver,
+      isAdmin: req.body.isAdmin
     });
     await user.save();
 
