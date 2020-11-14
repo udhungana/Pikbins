@@ -7,6 +7,7 @@ import logo from "../assets/logo.png";
 import axios from "axios";
 
 function Auth() {
+  //var utsav = false;
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [address, setAddress] = useState("");
@@ -40,9 +41,17 @@ function Auth() {
         console.log(token)
         console.log("isDriver from backend");
         console.log(response.data.isDriver);
-        setIsDriver(!response.data.isDriver);
+        // if (response.data.isDriver !== isDriver) {
+        //   console.log("if")
+        //   console.log(!isDriver)
+        //   setIsDriver(!isDriver)
+        // }
+        setIsDriver(response.data.isDriver);
         console.log("isDriver");
         console.log(isDriver);
+        //utsav = response.data.isDriver;
+        //console.log("utsav");
+        //console.log(utsav);
       })
 
       .catch((err) => {
@@ -96,14 +105,13 @@ function Auth() {
   };
 
   useEffect(() => {
-    // if (isDriver === false) {
-    //   if (token["mr-token"]) window.location.href = "/home";
-    // }
-    // else {
-    //   if (token["mr-token"]) window.location.href = "/driver";
-    // }
-    if (token["mr-token"]) window.location.href = "/home";
-  }, [token]);
+    if (isDriver == true) {
+      if (token["mr-token"]) window.location.href = "/driver";
+    }
+    else {
+      if (token["mr-token"]) window.location.href = "/home";
+    }
+  }, [isDriver, token]);
 
   return (
     <Form className="login-form">
