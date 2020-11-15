@@ -8,8 +8,7 @@ import axios from "axios";
 import { faTemperatureLow } from "@fortawesome/free-solid-svg-icons";
 
 function Auth() {
-  var driverNot = false;
-  var adminNot = false;
+  //var utsav = false;
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [address, setAddress] = useState("");
@@ -45,17 +44,17 @@ function Auth() {
 
         console.log("isDriver from backend");
         console.log(response.data.isDriver);
-        driverNot = response.data.isDriver;
+        // if (response.data.isDriver !== isDriver) {
+        //   console.log("if")
+        //   console.log(!isDriver)
+        //   setIsDriver(!isDriver)
+        // }
+        setIsDriver(response.data.isDriver);
         console.log("isDriver");
-        setIsDriver(driverNot);
-        console.log(driverNot);
-
-        console.log("isAdmin from backend");
-        console.log(response.data.isAdmin);
-        adminNot = response.data.isAdmin;
-        console.log("isAdmin");
-        setIsAdmin(adminNot);
-        console.log(adminNot);
+        console.log(isDriver);
+        //utsav = response.data.isDriver;
+        //console.log("utsav");
+        //console.log(utsav);
       })
 
       .catch((err) => {
@@ -109,14 +108,12 @@ function Auth() {
   };
 
   useEffect(() => {
-    if (driverNot == true) {
+    if (isDriver == true) {
       if (token["mr-token"]) window.location.href = "/driver";
-    } else if (adminNot == true) {
-      if (token["mr-token"]) window.location.href = "/adminHome";
     } else {
       if (token["mr-token"]) window.location.href = "/home";
     }
-  }, [token]);
+  }, [isDriver, token]);
 
   return (
     <Form className="login-form">
