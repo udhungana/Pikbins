@@ -10,6 +10,7 @@ import {
   faUser,
   faTruck,
   faList,
+  faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideBarNav = () => {
@@ -41,6 +42,13 @@ const SideBarNav = () => {
           <FontAwesomeIcon icon={faList} />
           {"   "}
           Generate List
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="/adminAssignedList" style={textStl}>
+          <FontAwesomeIcon icon={faClipboardList} />
+          {"   "}
+          Assigned List
         </NavLink>
       </NavItem>
     </Nav>

@@ -9,6 +9,7 @@ import AdminHome from "./components/adminHome";
 import AdminDriver from "./components/adminDriver";
 import AdminUser from "./components/adminUser";
 import AdminGenerateList from "./components/adminGenerateList";
+import AdminAssignedList from "./components/adminAssignedList";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="adminDriver" element={<AdminDriver />} />
             <Route path="adminUser" element={<AdminUser />} />
             <Route path="adminGenerateList" element={<AdminGenerateList />} />
+            <Route path="adminAssignedList" element={<AdminAssignedList />} />
           </Routes>
         </BrowserRouter>
       </CookiesProvider>
