@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   Collapse,
   Navbar,
@@ -148,9 +150,13 @@ const Home = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText style={{ color: "red" }} onClick={logoutClicked}>
+            <Button
+              style={{ color: "red", backgroundColor: "white" }}
+              onClick={logoutClicked}
+            >
+              <FontAwesomeIcon icon={faSignOutAlt} />
               Logout
-            </NavbarText>
+            </Button>
           </Collapse>
         </Navbar>
       </div>

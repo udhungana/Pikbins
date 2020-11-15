@@ -20,8 +20,8 @@ function Auth() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const [IsDriver, setIsDriver] = useState(false);
-  const [IsAdmin, setIsAdmin] = useState(false);
+  const [isDriver, setIsDriver] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
   const [alertView, setAlertView] = useState(false);
   const [passwordView, setPasswordView] = useState(false);
