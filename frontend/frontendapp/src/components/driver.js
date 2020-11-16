@@ -32,7 +32,7 @@ function Driver() {
     // Run! Like go get some data from an API.
     if (logout == false && token["mr-token"]) {
       axios
-        .post("/getTask", {
+        .get("/getTask", {
           headers: { Authorization: `Bearer ${token["mr-token"]}` },
         })
         .then((response) => {
