@@ -36,6 +36,18 @@ function AdminHome() {
 
   const [mappableFields, setMappableFields] = useState([]);
 
+  // useEffect(() => {
+  //   axios
+  //     .get("/get")
+  //     .then((response) => {
+  //       setlistM(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
   // const adminUserClicked = () => {
   //   console.log("hello");
   //   axios.get("/getCustomer").then((response) => {
