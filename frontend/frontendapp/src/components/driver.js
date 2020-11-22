@@ -36,7 +36,8 @@ function Driver() {
           headers: { Authorization: `Bearer ${token["mr-token"]}` },
         })
         .then((response) => {
-          setTodos(response.data);
+          console.log(response);
+          setTodos(response.data.path);
         })
         .catch((error) => {
           console.log(error);
@@ -82,6 +83,20 @@ function Driver() {
       >
         <div className="todo-list" style={{ flex: 1 }}>
           <h1 style={{ color: "green" }}>Pickup Locations List</h1>
+          <p
+            style={{
+              flex: 0.1,
+            }}
+          >
+            <Button
+              style={{ color: "red", backgroundColor: "white" }}
+              onClick={logoutClicked}
+            >
+              {" "}
+              <FontAwesomeIcon icon={faSignOutAlt} />
+              Logout
+            </Button>
+          </p>
           {todos.map((todo, index) => (
             <TodoItem
               key={index}
@@ -90,20 +105,6 @@ function Driver() {
               deleteItem={() => deleteItem(todo.address)}
             />
           ))}
-        </div>
-        <div
-          style={{
-            flex: 0.1,
-          }}
-        >
-          <Button
-            style={{ color: "red", backgroundColor: "white" }}
-            onClick={logoutClicked}
-          >
-            {" "}
-            <FontAwesomeIcon icon={faSignOutAlt} />
-            Logout
-          </Button>
         </div>
       </div>
     </div>

@@ -151,29 +151,3 @@ function AdminAssignedList() {
   );
 }
 export default AdminAssignedList;
-
-const textStl = {
-  color: "green",
-  backgroundColor: "white",
-  width: 190,
-  margin: 4,
-  borderBottom: "1px solid #C0C0C0",
-};
-
-const brandStl = {
-  color: "green",
-  backgroundColor: "white",
-  width: 190,
-  margin: 5,
-  marginTop: 0,
-};
-
-const navDesign = {
-  alignItems: "flex-start",
-  justifyContent: "left",
-  width: 200,
-  height: 700,
-  backgroundColor: "white",
-  borderRight: "1px solid #C0C0C0",
-  marginTop: 10,
-};

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { Nav, NavItem, NavLink, Table, Navbar } from "reactstrap";
+import { Nav, NavItem, NavLink, Table, Navbar, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 // import {
 //   faHome,
 //   faUser,
@@ -34,6 +35,19 @@ const BrandHeader = () => {
         }}
       >
         Pick Bins Admin
+      </p>
+      <p
+        style={{
+          marginRight: 30,
+          borderBottom: "3px solid green",
+          alignItems: "center",
+          marginTop: 5,
+        }}
+      >
+        <Button style={{ color: "red", backgroundColor: "white" }}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          Logout
+        </Button>
       </p>
     </div>
   );

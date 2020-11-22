@@ -14,9 +14,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
   Card,
-  CardImg,
   CardText,
   CardBody,
   CardTitle,
@@ -129,11 +127,11 @@ const Home = () => {
                   Pickups
                 </NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink style={{ color: "green" }} href="/adminHome">
                   Admin
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle style={{ color: "green" }} nav caret>
                   Options

@@ -49,7 +49,10 @@ const AdminDriver = () => {
       <div className="row">
         <SideBarNav />
         {/* add table/other content in each page after this */}
-        <div>
+        <div
+          className="row"
+          style={{ flex: 1, alignContent: "flex-start", marginLeft: 20 }}
+        >
           {listM.map((driver, index) => (
             <ListGroup
               key={index}

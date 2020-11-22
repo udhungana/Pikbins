@@ -50,8 +50,10 @@ function Auth() {
         //   setIsDriver(!isDriver)
         // }
         setIsDriver(response.data.isDriver);
+
         console.log("isDriver");
         console.log(isDriver);
+        setIsAdmin(response.data.isAdmin);
         //utsav = response.data.isDriver;
         //console.log("utsav");
         //console.log(utsav);
@@ -110,10 +112,12 @@ function Auth() {
   useEffect(() => {
     if (isDriver == true) {
       if (token["mr-token"]) window.location.href = "/driver";
+    } else if (isAdmin == true) {
+      if (token["mr-token"]) window.location.href = "/adminHome";
     } else {
       if (token["mr-token"]) window.location.href = "/home";
     }
-  }, [isDriver, token]);
+  }, [isDriver, isAdmin, token]);
 
   return (
     <Form className="login-form">

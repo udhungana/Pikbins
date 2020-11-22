@@ -45,17 +45,18 @@ const AdminUser = () => {
   return (
     <div>
       <BrandHeader />
-      <div className="row">
-        <div className="clearfix">
-          <SideBarNav />
-        </div>
+      <div className="row" style={{ display: "flex" }}>
+        <SideBarNav />
+
         {/* add table/other content in each page after this */}
-        <div>
+
+        <div className="row" style={{ flex: 1, marginLeft: 20 }}>
           {listM.map((user, index) => (
             <ListGroup
               key={index}
               style={{
                 margin: 20,
+                width: 300,
               }}
             >
               <ListGroupItem>
