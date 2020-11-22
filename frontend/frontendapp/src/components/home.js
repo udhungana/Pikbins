@@ -157,6 +157,12 @@ const Home = () => {
             </Button>
           </Collapse>
         </Navbar>
+        <p style={{ color: "green", marginTop: 50 }}>
+          <strong>Welcome To PICK BINS </strong>
+        </p>
+        <p style={{ color: "green" }}>
+          <strong>Click on Dashboard to contine. Thank You </strong>
+        </p>
       </div>
       {dashboardClicked ? (
         <div>
