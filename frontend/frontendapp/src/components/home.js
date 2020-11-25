@@ -157,6 +157,7 @@ const Home = () => {
             </Button>
           </Collapse>
         </Navbar>
+        lp
         <p style={{ color: "green", marginTop: 50 }}>
           <strong>Welcome To PICK BINS </strong>
         </p>
