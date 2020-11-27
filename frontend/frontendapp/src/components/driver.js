@@ -3,29 +3,32 @@ import "./driver.css";
 import TodoItem from "./listItem";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { Button } from "reactstrap";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "reactstrap";
+import logo from "../assets/logo.png";
 
-//const Driver = () => {
 function Driver() {
   const [logout, setLogout] = useState(false);
   const [todos, setTodos] = useState([]);
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
-  //static deleteMovie(mov_id, token) {
-  //    return fetch(`http://localhost:8000/api/movies/${mov_id}/`, {
-  //        method: 'DELETE',
-  //        headers: {
-  //            'Content-Type':'application/json',
-  //            'Authorization': `Token ${token}`
-  //        }
-  //      })
+  const [isOpen, setIsOpen] = useState(false);
 
   const logoutClicked = () => {
     deleteToken(["mr-token"]);
     setLogout(true);
-    console.log(logout);
+    //console.log(logout);
   };
 
   useEffect(() => {
@@ -48,12 +51,8 @@ function Driver() {
   }, [logout, token]);
 
   const deleteItem = (addr) => {
-    //API.deleteMovie(movie.id, token['mr-token'])
-    //    .then(() => props.removeClicked(movie))
-    //    .catch(error => console.log())
-    console.log("delete clicked");
-    console.log(addr);
-    //const name = e.target.getAttribute("name")
+    //console.log("delete clicked");
+    //console.log(addr);
     setTodos(todos.filter((item) => item.address !== addr));
 
     //updating location of driver
@@ -71,8 +70,43 @@ function Driver() {
       });
   };
 
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
     <div className="app">
+      <Navbar color="light" light expand="md">
+        <NavbarBrand style={{ color: "green" }} href="#">
+          <img src={logo} width="30" height="30" />
+            PickBins
+          </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle style={{ color: "green" }} nav caret>
+                Options
+                </DropdownToggle>
+              <DropdownMenu style={{ color: "green" }} right>
+                <DropdownItem style={{ color: "green" }}>
+                  Contacts
+                  </DropdownItem>
+                <DropdownItem style={{ color: "green" }}>
+                  About
+                  </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem style={{ color: "red" }}>Help</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+          <Button
+            style={{ color: "red", backgroundColor: "white" }}
+            onClick={logoutClicked}
+          >
+            <FontAwesomeIcon icon={faSignOutAlt} />
+              Logout
+            </Button>
+        </Collapse>
+      </Navbar>
       <div
         style={{
           display: "flex",
@@ -88,14 +122,6 @@ function Driver() {
               flex: 0.1,
             }}
           >
-            <Button
-              style={{ color: "red", backgroundColor: "white" }}
-              onClick={logoutClicked}
-            >
-              {" "}
-              <FontAwesomeIcon icon={faSignOutAlt} />
-              Logout
-            </Button>
           </p>
           {todos.map((todo, index) => (
             <TodoItem

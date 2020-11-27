@@ -8,7 +8,6 @@ import axios from "axios";
 import { faTemperatureLow } from "@fortawesome/free-solid-svg-icons";
 
 function Auth() {
-  //var utsav = false;
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
   const [address, setAddress] = useState("");
@@ -39,24 +38,14 @@ function Auth() {
         console.log("mr-token from backend");
         console.log(response.data.token);
         setToken("mr-token", response.data.token);
-        console.log("mr-token");
+        console.log("mr-token from useState");
         console.log(token);
-
         console.log("isDriver from backend");
         console.log(response.data.isDriver);
-        // if (response.data.isDriver !== isDriver) {
-        //   console.log("if")
-        //   console.log(!isDriver)
-        //   setIsDriver(!isDriver)
-        // }
         setIsDriver(response.data.isDriver);
-
-        console.log("isDriver");
+        console.log("isDriver from useState");
         console.log(isDriver);
         setIsAdmin(response.data.isAdmin);
-        //utsav = response.data.isDriver;
-        //console.log("utsav");
-        //console.log(utsav);
       })
 
       .catch((err) => {
@@ -159,162 +148,162 @@ function Auth() {
           </p>
         </div>
       ) : (
-        <div>
-          <img src={logo} height="150" width="150" />
-          <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="first_name"
-                  id="First_Name"
-                  placeholder="First Name"
-                  value={first_name}
-                  onChange={(evt) => setFirstname(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="last_name"
-                  id="Last_Name"
-                  placeholder="Last Name"
-                  value={last_name}
-                  onChange={(evt) => setLastname(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <FormGroup>
-            <Input
-              type="text"
-              name="address"
-              id="Address"
-              placeholder="Address eg:1234 Main St"
-              value={address}
-              onChange={(evt) => setAddress(evt.target.value)}
-            />
-          </FormGroup>
-          <Row form>
-            <Col md={5}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="city"
-                  id="City"
-                  placeholder="City"
-                  value={city}
-                  onChange={(evt) => setCity(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={3}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="zip_code"
-                  id="Zip_Code"
-                  placeholder="Zip eg:12345"
-                  value={zip_code}
-                  onChange={(evt) => setZip(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={4}>
-              <FormGroup>
-                <Input
-                  type="text"
-                  name="country"
-                  id="Country"
-                  placeholder="Country"
-                  value={country}
-                  onChange={(evt) => setCountry(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="email"
-                  name="email"
-                  id="Email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(evt) => setEmail(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="username"
-                  name="username"
-                  id="Username"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(evt) => setUsername(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password"
-                  id="Password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(evt) => setPassword(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-            <Col md={6}>
-              <FormGroup>
-                <Input
-                  type="password"
-                  name="password2"
-                  id="Password2"
-                  placeholder="Confirm Password"
-                  value={password2}
-                  onChange={(evt) => setPassword2(evt.target.value)}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Button
-            color="success"
-            type="button"
-            className="btn-lg btn-block"
-            onClick={registerClicked}
-          >
-            Register
+          <div>
+            <img src={logo} height="150" width="150" />
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="first_name"
+                    id="First_Name"
+                    placeholder="First Name"
+                    value={first_name}
+                    onChange={(evt) => setFirstname(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="last_name"
+                    id="Last_Name"
+                    placeholder="Last Name"
+                    value={last_name}
+                    onChange={(evt) => setLastname(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <FormGroup>
+              <Input
+                type="text"
+                name="address"
+                id="Address"
+                placeholder="Address eg:1234 Main St"
+                value={address}
+                onChange={(evt) => setAddress(evt.target.value)}
+              />
+            </FormGroup>
+            <Row form>
+              <Col md={5}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="city"
+                    id="City"
+                    placeholder="City"
+                    value={city}
+                    onChange={(evt) => setCity(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={3}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="zip_code"
+                    id="Zip_Code"
+                    placeholder="Zip eg:12345"
+                    value={zip_code}
+                    onChange={(evt) => setZip(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="country"
+                    id="Country"
+                    placeholder="Country"
+                    value={country}
+                    onChange={(evt) => setCountry(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="email"
+                    name="email"
+                    id="Email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(evt) => setEmail(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="username"
+                    name="username"
+                    id="Username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(evt) => setUsername(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="password"
+                    name="password"
+                    id="Password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(evt) => setPassword(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Input
+                    type="password"
+                    name="password2"
+                    id="Password2"
+                    placeholder="Confirm Password"
+                    value={password2}
+                    onChange={(evt) => setPassword2(evt.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Button
+              color="success"
+              type="button"
+              className="btn-lg btn-block"
+              onClick={registerClicked}
+            >
+              Register
           </Button>
-          {alertView ? (
-            passwordView ? (
-              <Alert color="danger">Password not matched</Alert>
+            {alertView ? (
+              passwordView ? (
+                <Alert color="danger">Password not matched</Alert>
+              ) : (
+                  <Alert color="success">
+                    Now you are good to go to login page. Click Login here!
+                  </Alert>
+                )
             ) : (
-              <Alert color="success">
-                Now you are good to go to login page. Click Login here!
-              </Alert>
-            )
-          ) : (
-            <Alert color="danger">All fields are required</Alert>
-          )}
+                <Alert color="danger">All fields are required</Alert>
+              )}
 
-          <span>
-            <p>or</p>
-          </span>
-          <p style={{ color: "green" }} onClick={() => setIsLoginView(true)}>
-            Login here!
+            <span>
+              <p>or</p>
+            </span>
+            <p style={{ color: "green" }} onClick={() => setIsLoginView(true)}>
+              Login here!
           </p>
-        </div>
-      )}
+          </div>
+        )}
     </Form>
   );
 }
