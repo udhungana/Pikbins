@@ -17,8 +17,6 @@ import {
   Card,
   CardText,
   CardBody,
-  CardTitle,
-  CardSubtitle,
   Button,
 } from "reactstrap";
 import logo from "../assets/logo.png";
@@ -37,18 +35,10 @@ const Home = () => {
 
   const [userName, setUserName] = useState();
 
-  const [dashboardClicked, setDashboardClicked] = useState(false);
+  const [dashboardClicked, setDashboardClicked] = useState(0);
 
   useEffect(() => {
-    console.log(token);
-    if (!token["mr-token"]) window.location.href = "/";
-  }, [token]);
 
-  const logoutClicked = () => {
-    deleteToken(["mr-token"]);
-  };
-
-  const onDashboardClicked = () => {
     var today = new Date(),
       date =
         today.getFullYear() +
@@ -97,7 +87,17 @@ const Home = () => {
       .catch((error) => {
         console.log(error);
       });
-    setDashboardClicked(true);
+
+    //console.log(token);
+    if (!token["mr-token"]) window.location.href = "/";
+  }, [dashboardClicked, token]);
+
+  const logoutClicked = () => {
+    deleteToken(["mr-token"]);
+  };
+
+  const onDashboardClicked = () => {
+    setDashboardClicked(dashboardClicked => dashboardClicked + 1)
   };
 
   const toggle = () => setIsOpen(!isOpen);
@@ -122,29 +122,19 @@ const Home = () => {
                   Dashboard
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink style={{ color: "green" }} href="/driver">
-                  Pickups
-                </NavLink>
-              </NavItem>
-              {/* <NavItem>
-                <NavLink style={{ color: "green" }} href="/adminHome">
-                  Admin
-                </NavLink>
-              </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle style={{ color: "green" }} nav caret>
                   Options
                 </DropdownToggle>
                 <DropdownMenu style={{ color: "green" }} right>
                   <DropdownItem style={{ color: "green" }}>
-                    Support
+                    Contacts
                   </DropdownItem>
                   <DropdownItem style={{ color: "green" }}>
-                    Account
+                    About
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem style={{ color: "red" }}>Reset</DropdownItem>
+                  <DropdownItem style={{ color: "red" }}>Help</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
@@ -162,65 +152,63 @@ const Home = () => {
           <strong>Welcome To PICK BINS </strong>
         </p>
         <p style={{ color: "green" }}>
-          <strong>Click on Dashboard to contine. Thank You </strong>
+          <strong>Click on Dashboard to refresh time. Thank You! </strong>
         </p>
       </div>
-      {dashboardClicked ? (
-        <div>
-          <h1 style={{ color: "green" }}>Hello {userName} </h1>
-          <h2 style={{ color: "green" }}>Your next pickup is scheduled for:</h2>
-          <div
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              margin: 20,
-              display: "flex",
-            }}
-          >
-            <Card>
-              <CardBody>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <CardText>Date:</CardText>
-                  <CardText style={{ marginLeft: 60 }}>{date}</CardText>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <CardText>Time:</CardText>
-                  <CardText style={{ marginLeft: 60 }}>{time}</CardText>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <CardText>Location:</CardText>
-                  <CardText style={{ marginLeft: 35 }}>{location}</CardText>
-                </div>
-              </CardBody>
-            </Card>
-          </div>
-          <p style={{ color: "green", fontWeight: "bold" }}>
-            Missed Your Pickup?Don't Worry
-          </p>
-          <p style={{ color: "green", fontWeight: "bold" }}>
-            Just Send us Pickup Request
-          </p>
-          {/* <Button color="success">Request Again</Button> */}
+      <div>
+        <h1 style={{ color: "green" }}>Hello {userName} </h1>
+        <h2 style={{ color: "green" }}>Your next pickup is scheduled for:</h2>
+        <div
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            margin: 20,
+            display: "flex",
+          }}
+        >
+          <Card>
+            <CardBody>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontWeight: "bold",
+                }}
+              >
+                <CardText>Date:</CardText>
+                <CardText style={{ marginLeft: 60 }}>{date}</CardText>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontWeight: "bold",
+                }}
+              >
+                <CardText>Time:</CardText>
+                <CardText style={{ marginLeft: 60 }}>{time}</CardText>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontWeight: "bold",
+                }}
+              >
+                <CardText>Location:</CardText>
+                <CardText style={{ marginLeft: 35 }}>{location}</CardText>
+              </div>
+            </CardBody>
+          </Card>
         </div>
-      ) : null}
+        <p style={{ color: "green", fontWeight: "bold" }}>
+          Missed Your Pickup?Don't Worry
+          </p>
+        <p style={{ color: "green", fontWeight: "bold" }}>
+          Just Send us Pickup Request
+          </p>
+        {/* <Button color="success">Request Again</Button> */}
+      </div>
     </>
   );
 };
