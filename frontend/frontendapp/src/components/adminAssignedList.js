@@ -9,36 +9,48 @@ import BrandHeader from "./brandHeader";
 import { ListGroup, ListGroupItem, Card } from "reactstrap";
 
 function AdminAssignedList() {
-  var array = [
-    {
-      driver: "Utsav",
-      user: ["aad", "bbd", "ccd", "eed"],
-    },
-    {
-      driver: "Himal",
-      user: ["aaf", "bbf", "ccf", "eef"],
-    },
-    {
-      driver: "Bipul",
-      user: ["aag", "bbg", "ccg", "eeg"],
-    },
-    {
-      driver: "Suyash",
-      user: ["aam", "bbm", "ccm", "eem"],
-    },
-    {
-      driver: "Pujan",
-      user: ["aao", "bbo", "cco", "eeo"],
-    },
-  ];
-
+  // var array = [
+  //   {
+  //     driver: "Utsav",
+  //     user: ["aad", "bbd", "ccd", "eed"],
+  //   },
+  //   {
+  //     driver: "Himal",
+  //     user: ["aaf", "bbf", "ccf", "eef"],
+  //   },
+  //   {
+  //     driver: "Bipul",
+  //     user: ["aag", "bbg", "ccg", "eeg"],
+  //   },
+  //   {
+  //     driver: "Suyash",
+  //     user: ["aam", "bbm", "ccm", "eem"],
+  //   },
+  //   {
+  //     driver: "Pujan",
+  //     user: ["aao", "bbo", "cco", "eeo"],
+  //   },
+  // ];
+  const [dlist, setDlist] = useState([]);
+  const [ulist, setUlist] = useState([])
   const [showCatagory, setShowCatagory] = useState(false);
   const [catagorizedDriver, setCatagorizedDriver] = useState([]);
   const [containsAlready, setContainsAlready] = useState(false);
   const [count, setCount] = useState(0);
   const [notDisabled, setNotDisabled] = useState([false]);
 
-  const catagorizeUsers = (index) => {
+  const catagorizeUsers = (index, driverID) => {
+    console.log('index' + index)
+    console.log('driver id' + driverID)
+    axios
+      .post("/categorizeCustomer", { driverID: driverID })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     var i;
     let newClick = [...notDisabled];
     newClick[index] = true;
@@ -70,6 +82,18 @@ function AdminAssignedList() {
   //   });
   // };
 
+  useEffect(() => {
+    axios
+      .get("/getDriver")
+      .then((response) => {
+        console.log(response)
+        setDlist(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
       <BrandHeader />
@@ -94,15 +118,15 @@ function AdminAssignedList() {
             </tr>
           </thead>
           <tbody>
-            {array.map((data, index) => (
+            {dlist.map((d, index) => (
               <tr key={index}>
-                <td>{data.driver}</td>
+                <td>{d.fName} {d.lName}</td>
                 <td>
                   <Button
                     color="success"
                     style={{ margin: 0 }}
                     disabled={notDisabled[index] ? true : false}
-                    onClick={() => catagorizeUsers(index)}
+                    onClick={() => catagorizeUsers(index, d._id)}
                   >
                     Catagorize
                   </Button>
@@ -112,7 +136,15 @@ function AdminAssignedList() {
           </tbody>
         </Table>
       </div>
-      <div className="mbsc-grid" style={{ marginLeft: 190 }}>
+
+    </div>
+  );
+}
+export default AdminAssignedList;
+
+
+
+{/* <div className="mbsc-grid" style={{ marginLeft: 190 }}>
         {showCatagory ? (
           <div className="row">
             {catagorizedDriver.map((data) => {
@@ -146,8 +178,4 @@ function AdminAssignedList() {
             })}
           </div>
         ) : null}
-      </div>
-    </div>
-  );
-}
-export default AdminAssignedList;
+      </div> */}

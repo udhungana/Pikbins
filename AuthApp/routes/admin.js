@@ -18,33 +18,34 @@ router.post("/categorizeCustomer", async (req, res) => {
   //Takes request which has driver location. Find the list
   //of user which has same city as driver's city. And categorize those
   // user in driver's list.
-  const doc = await DriverCustomer.findOne({driver:req.body.driverID});
-  if(!doc){
+  const doc = await DriverCustomer.findOne({ driver: req.body.driverID });
+  if (!doc) {
     const driverCustomerList = new DriverCustomer({
-        driver: req.body.driverID,
-        //customers: null
+      driver: req.body.driverID,
+      //customers: null
     })
     await driverCustomerList.save();
   }
-  
+
   const driver_location = req.body.location;
   const users = await User.find({ city: driver_location, isDriver: false, isAdmin: false });
   //console.log(users);
   for (i = 0; i < users.length; i++) {
-      userID = users[i]._id;
-      DriverCustomer.findOneAndUpdate(
-          {driver:req.body.driverID},
-          {$addToSet: {customers:userID}},  
-          function (err,success){
-              if(err){
-                console.log(err);
-              }else{
-                console.log(success);
-              }
-          }
-      )
+    userID = users[i]._id;
+    DriverCustomer.findOneAndUpdate(
+      { driver: req.body.driverID },
+      { $addToSet: { customers: userID } },
+      function (err, success) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(success);
+        }
+      }
+    )
   }
-  res.send("Data inserted");
+  const data = await DriverCustomer.findOne({ driver: req.body.driverID });
+  res.send(data);
 });
 
 module.exports = router;
