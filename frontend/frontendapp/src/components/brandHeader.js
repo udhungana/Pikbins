@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
-import { Nav, NavItem, NavLink, Table, Navbar, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-// import {
-//   faHome,
-//   faUser,
-//   faTruck,
-//   faList,
-// } from "@fortawesome/free-solid-svg-icons";
+import { useCookies } from "react-cookie";
 
 const BrandHeader = () => {
+
+  const [token, setToken, deleteToken] = useCookies(["mr-token"]);
+  //const [out, setOut] = useState(false)
+  const logoutClicked = () => {
+    deleteToken(["mr-token"]);
+    //setOut(true)
+  };
+
+  useEffect(() => {
+    //console.log(token);
+    if (!token["mr-token"]) window.location.href = "/";
+    //this reroute needed token for this
+    // if (out) {
+    //   window.location.href = "/";
+    // }
+  }, [token]);
+
   return (
     <div className="row">
       <p
@@ -44,7 +56,7 @@ const BrandHeader = () => {
           marginTop: 5,
         }}
       >
-        <Button style={{ color: "red", backgroundColor: "white" }}>
+        <Button style={{ color: "red", backgroundColor: "white" }} onClick={logoutClicked}>
           <FontAwesomeIcon icon={faSignOutAlt} />
           Logout
         </Button>

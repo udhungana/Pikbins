@@ -106,6 +106,8 @@ function Auth() {
     } else {
       if (token["mr-token"]) window.location.href = "/home";
     }
+    //console.log('token of admin')
+    //console.log(token)
   }, [isDriver, isAdmin, token]);
 
   return (

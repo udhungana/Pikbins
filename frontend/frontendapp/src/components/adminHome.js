@@ -9,44 +9,21 @@ import Icon from "@material-ui/core/Icon";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
-
 function AdminHome() {
-  var array = [
-    {
-      address: "1000 mary st. , Irving, Texas",
-      driver: "Utsav",
-      status: "done",
-    },
-    {
-      address: "5016 courside dr, Texas, Jhapa",
-      driver: "Himal",
-      status: "pending",
-    },
-    {
-      address: "2200 walnut hill, Texas, Arlington",
-      driver: "Bipul",
-      status: "done",
-    },
-    {
-      address: "1068 blue diamond st., Texas, Syanja",
-      driver: "Suyash",
-      status: "pending",
-    },
-  ];
 
   const [mappableFields, setMappableFields] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("/get")
-  //     .then((response) => {
-  //       setlistM(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("/getDriver")
+      .then((response) => {
+        console.log(response)
+        setMappableFields(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   // const adminUserClicked = () => {
   //   console.log("hello");
@@ -79,11 +56,11 @@ function AdminHome() {
             </tr>
           </thead>
           <tbody>
-            {array.map((data, index) => (
+            {mappableFields.map((d, index) => (
               <tr key={index}>
-                <td>{data.address}</td>
-                <td>{data.driver}</td>
-                <td>{data.status}</td>
+                <td>{d.street}</td>
+                <td>{d.fName} {d.lName}</td>
+                <td>0</td>
               </tr>
             ))}
           </tbody>
