@@ -33,54 +33,65 @@ function AdminAssignedList() {
   // ];
   const [dlist, setDlist] = useState([]);
   const [ulist, setUlist] = useState([])
-  const [showCatagory, setShowCatagory] = useState(false);
-  const [catagorizedDriver, setCatagorizedDriver] = useState([]);
-  const [containsAlready, setContainsAlready] = useState(false);
-  const [count, setCount] = useState(0);
-  const [notDisabled, setNotDisabled] = useState([false]);
+  // const [showCatagory, setShowCatagory] = useState(false);
+  // const [catagorizedDriver, setCatagorizedDriver] = useState([]);
+  // const [containsAlready, setContainsAlready] = useState(false);
+  // const [count, setCount] = useState(0);
+  // const [notDisabled, setNotDisabled] = useState([false]);
+  const [categorizeClicked, setCategorizeClicked] = useState(false)
+  const [first, setFirst] = useState('');
+  const [last, setLast] = useState('');
 
-  const catagorizeUsers = (index, driverID) => {
-    console.log('index' + index)
-    console.log('driver id' + driverID)
+  const catagorizeUsers = (driverID, first, last) => {
+    setFirst(first)
+    setLast(last)
+    console.log('driver id')
+    console.log(driverID)
+    console.log('driver first')
+    console.log(first)
+    console.log('driver last')
+    console.log(last)
     axios
       .post("/categorizeCustomer", { driverID: driverID })
       .then((response) => {
-        console.log(response)
+        console.log(response.data)
+        setUlist(response.data)
       })
       .catch((error) => {
         console.log(error);
       });
+    setCategorizeClicked(true);
 
-    var i;
-    let newClick = [...notDisabled];
-    newClick[index] = true;
-    setNotDisabled(newClick);
-    setShowCatagory(true);
+    //   var i;
+    //   let newClick = [...notDisabled];
+    //   newClick[index] = true;
+    //   setNotDisabled(newClick);
+    //   setShowCatagory(true);
 
-    if (catagorizedDriver.length === 0 && count === 0) {
-      setCatagorizedDriver([...catagorizedDriver, index]);
-      console.log(catagorizedDriver);
-      setCount(count + 1);
-    } else {
-      for (i = 0; i < catagorizedDriver.length; i++) {
-        if (catagorizedDriver[i] === index) {
-          setContainsAlready(true);
-        }
-      }
-      if (!containsAlready) {
-        setCatagorizedDriver([...catagorizedDriver, index]);
-        console.log(catagorizedDriver);
-        setCount(count + 1);
-      }
-    }
+    //   if (catagorizedDriver.length === 0 && count === 0) {
+    //     setCatagorizedDriver([...catagorizedDriver, index]);
+    //     console.log(catagorizedDriver);
+    //     setCount(count + 1);
+    //   } else {
+    //     for (i = 0; i < catagorizedDriver.length; i++) {
+    //       if (catagorizedDriver[i] === index) {
+    //         setContainsAlready(true);
+    //       }
+    //     }
+    //     if (!containsAlready) {
+    //       setCatagorizedDriver([...catagorizedDriver, index]);
+    //       console.log(catagorizedDriver);
+    //       setCount(count + 1);
+    //     }
+    //   }
+    // };
+
+    // const adminUserClicked = () => {
+    //   console.log("hello");
+    //   axios.get("/getCustomer").then((response) => {
+    //     console.log(response);
+    //   });
   };
-
-  // const adminUserClicked = () => {
-  //   console.log("hello");
-  //   axios.get("/getCustomer").then((response) => {
-  //     console.log(response);
-  //   });
-  // };
 
   useEffect(() => {
     axios
@@ -125,8 +136,8 @@ function AdminAssignedList() {
                   <Button
                     color="success"
                     style={{ margin: 0 }}
-                    disabled={notDisabled[index] ? true : false}
-                    onClick={() => catagorizeUsers(index, d._id)}
+                    //disabled={notDisabled[index] ? true : false}
+                    onClick={() => catagorizeUsers(d._id, d.fName, d.lName)}
                   >
                     Catagorize
                   </Button>
@@ -135,6 +146,33 @@ function AdminAssignedList() {
             ))}
           </tbody>
         </Table>
+      </div>
+      <div>
+        {categorizeClicked ? (
+          <Table
+            striped
+            style={{
+              width: 200,
+              marginLeft: 200,
+              marginTop: 2,
+              border: "1px solid #C0C0C0",
+              textAlign: "left",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Customers of {first} {last}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ulist.map((u, index) => (
+                <tr key={index}>
+                  <td>{u}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : null}
       </div>
 
     </div>
@@ -151,13 +189,13 @@ export default AdminAssignedList;
               return (
                 <div>
                   <Card style={{ margin: 20 }}>
-                    <p>{array[data].driver}</p>
+                    <p>{dlist[data].driver}</p>
                     <ListGroup
                       style={{
                         margin: 20,
                       }}
                     >
-                      {array[data].user.map((uData) => {
+                      {ulist[data].user.map((uData) => {
                         return (
                           <ListGroupItem
                             style={{
