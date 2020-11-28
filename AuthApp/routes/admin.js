@@ -45,7 +45,17 @@ router.post("/categorizeCustomer", async (req, res) => {
     )
   }
   const data = await DriverCustomer.findOne({ driver: req.body.driverID });
-  res.send(data);
+  response_data = []
+  for(i = 0; i< data.customers.length; i++) {
+      const customer = await User.findOne({_id: data.customers[i]});
+      //console.log(customer);
+      const fname = customer.fName
+      const lname = customer.lName
+      const name = fname + '' + lname
+      response_data.push(name)
+  }
+
+  res.send(response_data);
 });
 
 module.exports = router;
