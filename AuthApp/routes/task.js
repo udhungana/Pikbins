@@ -57,7 +57,7 @@ function get_nearest_location(driver_location, user_location, fn, a) {
     );
   }
 }
-router.get("/generateTask", async (req, res) => {
+router.post("/generateTask", async (req, res) => {
   const dcList = await DriverCustomerList.findOne({
     driver: req.body.driverID,
   });
@@ -102,7 +102,7 @@ router.get("/generateTask", async (req, res) => {
           //console.log(doc);
         }
       );
-      //console.log(result);
+      console.log(result);
       for (i = 0; i < result.length; i++) {
         var address = result[i][0];
         var time = result[i][1];

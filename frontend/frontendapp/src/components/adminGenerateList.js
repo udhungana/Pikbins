@@ -29,53 +29,53 @@ import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
 
 function AdminGenerateList() {
-  var array = [
-    {
-      driver: "Utsav",
-      addresses: [
-        "1001 courtside dr.",
-        "2000 fine st.",
-        "300 line rd.",
-        "400 count dr.",
-      ],
-    },
-    {
-      driver: "Himal",
-      addresses: [
-        "700 side dr.",
-        "1000 wine st.",
-        "400 blue rd.",
-        "500 counter dr.",
-      ],
-    },
-    {
-      driver: "Bipul",
-      addresses: [
-        "1213 code dr.",
-        "1500 shine st.",
-        "9000 vine rd.",
-        "800 perma dr.",
-      ],
-    },
-    {
-      driver: "Suyash",
-      addresses: [
-        "109 square dr.",
-        "101 hike st.",
-        "3001 fire rd.",
-        "990 shout dr.",
-      ],
-    },
-    {
-      driver: "Pujan",
-      addresses: [
-        "1114 faun dr.",
-        "2113 longstaff st.",
-        "762 Never rd.",
-        "454 last dr.",
-      ],
-    },
-  ];
+  // var array = [
+  //   {
+  //     driver: "Utsav",
+  //     addresses: [
+  //       "1001 courtside dr.",
+  //       "2000 fine st.",
+  //       "300 line rd.",
+  //       "400 count dr.",
+  //     ],
+  //   },
+  //   {
+  //     driver: "Himal",
+  //     addresses: [
+  //       "700 side dr.",
+  //       "1000 wine st.",
+  //       "400 blue rd.",
+  //       "500 counter dr.",
+  //     ],
+  //   },
+  //   {
+  //     driver: "Bipul",
+  //     addresses: [
+  //       "1213 code dr.",
+  //       "1500 shine st.",
+  //       "9000 vine rd.",
+  //       "800 perma dr.",
+  //     ],
+  //   },
+  //   {
+  //     driver: "Suyash",
+  //     addresses: [
+  //       "109 square dr.",
+  //       "101 hike st.",
+  //       "3001 fire rd.",
+  //       "990 shout dr.",
+  //     ],
+  //   },
+  //   {
+  //     driver: "Pujan",
+  //     addresses: [
+  //       "1114 faun dr.",
+  //       "2113 longstaff st.",
+  //       "762 Never rd.",
+  //       "454 last dr.",
+  //     ],
+  //   },
+  // ];
   //const [listM, setlistM] = useState([]);
 
   const [showTask, setShowTask] = useState(false);
@@ -84,43 +84,69 @@ function AdminGenerateList() {
   const [count, setCount] = useState(0);
   const [notDisabled, setNotDisabled] = useState([false]);
 
-  const generateTasks = (index) => {
-    var i;
-    let newClick = [...notDisabled];
-    newClick[index] = true;
-    setNotDisabled(newClick);
+  const [dlist, setDlist] = useState([]);
+  const [ulist, setUlist] = useState([]);
+  const [generatedClicked, setGeneratedClicked] = useState(false)
+  const [first, setFirst] = useState('');
+  const [last, setLast] = useState('');
 
-    setShowTask(true);
+  const generateTasks = (driverID, first, last) => {
 
-    if (generatedDriver.length === 0 && count === 0) {
-      setGeneratedDriver([...generatedDriver, index]);
-      console.log(generatedDriver);
-      setCount(count + 1);
-    } else {
-      for (i = 0; i < generatedDriver.length; i++) {
-        if (generatedDriver[i] === index) {
-          setContainsAlready(true);
-        }
-      }
-      if (!containsAlready) {
-        setGeneratedDriver([...generatedDriver, index]);
-        console.log(generatedDriver);
-        setCount(count + 1);
-      }
-    }
+    setFirst(first)
+    setLast(last)
+    console.log('driver id')
+    console.log(driverID)
+    console.log('driver first')
+    console.log(first)
+    console.log('driver last')
+    console.log(last)
+    axios
+      .post("/generateTask", { driverID: driverID })
+      .then((response) => {
+        console.log(response.data.path)
+        setUlist(response.data.path)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setGeneratedClicked(true);
+
+    // var i;
+    // let newClick = [...notDisabled];
+    // newClick[index] = true;
+    // setNotDisabled(newClick);
+
+    // setShowTask(true);
+
+    // if (generatedDriver.length === 0 && count === 0) {
+    //   setGeneratedDriver([...generatedDriver, index]);
+    //   console.log(generatedDriver);
+    //   setCount(count + 1);
+    // } else {
+    //   for (i = 0; i < generatedDriver.length; i++) {
+    //     if (generatedDriver[i] === index) {
+    //       setContainsAlready(true);
+    //     }
+    //   }
+    //   if (!containsAlready) {
+    //     setGeneratedDriver([...generatedDriver, index]);
+    //     console.log(generatedDriver);
+    //     setCount(count + 1);
+    //   }
+    // }
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("/getDriver")
-  //     .then((response) => {
-  //       setlistM(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("/getDriver")
+      .then((response) => {
+        console.log(response)
+        setDlist(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div>
@@ -145,15 +171,15 @@ function AdminGenerateList() {
             </tr>
           </thead>
           <tbody>
-            {array.map((data, index) => (
+            {dlist.map((d, index) => (
               <tr key={index}>
-                <td>{data.driver}</td>
+                <td>{d.fName} {d.lName}</td>
                 <td>
                   <Button
                     color="success"
                     style={{ margin: 0 }}
-                    disabled={notDisabled[index] ? true : false}
-                    onClick={() => generateTasks(index)}
+                    //disabled={notDisabled[index] ? true : false}
+                    onClick={() => generateTasks(d._id, d.fName, d.lName)}
                   >
                     GenerateTask
                   </Button>
@@ -164,7 +190,40 @@ function AdminGenerateList() {
         </Table>
         {/* add table/other content in each page  upto here */}
       </div>
-      <div className="mbsc-grid" style={{ marginLeft: 190 }}>
+      <div>
+        {generatedClicked ? (
+          <Table
+            striped
+            style={{
+              width: 200,
+              marginLeft: 200,
+              marginTop: 2,
+              border: "1px solid #C0C0C0",
+              textAlign: "left",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Optimal list of {first} {last}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ulist.map((u, index) => (
+                <tr key={index}>
+                  <td>{u.address}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+export default AdminGenerateList;
+
+
+{/* <div className="mbsc-grid" style={{ marginLeft: 190 }}>
         {showTask ? (
           <div className="row">
             {generatedDriver.map((data) => {
@@ -198,8 +257,4 @@ function AdminGenerateList() {
             })}
           </div>
         ) : null}
-      </div>
-    </div>
-  );
-}
-export default AdminGenerateList;
+      </div> */}

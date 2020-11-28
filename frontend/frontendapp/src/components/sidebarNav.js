@@ -78,7 +78,7 @@ const navDesign = {
   justifyContent: "left",
   alignItems: "flex-start",
   width: 200,
-  height: 500,
+  height: 300,
   border: "1px solid #C0C0C0",
   backgroundColor: "white",
   marginTop: 0,
