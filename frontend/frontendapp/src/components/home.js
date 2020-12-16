@@ -25,7 +25,13 @@ import axios from "axios";
 /**
  * This is the home page of the application where therer will be dashboard show
  * @param {Stores token for sessions } token
- * @param {}
+ * @param {for toggling options} isOpen
+ * @param {Save date to show in dashboard card} date
+ * @param {Save time to show in dashboard} time
+ * @param {Save address to show in dashboard} location
+ * @param {to show user name of the user in dashboard} userName
+ * @param {to know if the dashboard is clicked} dashboardClicked
+ *
  */
 
 const Home = () => {
@@ -93,7 +99,6 @@ const Home = () => {
         console.log(error);
       });
 
-    //console.log(token);
     if (!token["mr-token"]) window.location.href = "/";
   }, [dashboardClicked, token]);
 
@@ -210,7 +215,6 @@ const Home = () => {
         <p style={{ color: "green", fontWeight: "bold" }}>
           Just Send us Pickup Request
         </p>
-        {/* <Button color="success">Request Again</Button> */}
       </div>
     </>
   );
