@@ -5,11 +5,17 @@ const User = require("../model/user");
 const Task = require("../model/task");
 const Location = require("../model/location");
 const DriverCustomerList = require("../model/driverCustomerList");
+const Status = require("../model/status");
 
 const googleMapsClient = require("@google/maps").createClient({
   key: "AIzaSyAJwZsfn11D8zVEscm8te2ZsygB4deaFk0",
 });
 
+{
+  /* make the api call to Distance matrix api to get 
+    nearest locations
+*/
+}
 function get_nearest_location(driver_location, user_location, fn, a) {
   //console.log(a);
   if (user_location.length == 0) {
@@ -39,7 +45,9 @@ function get_nearest_location(driver_location, user_location, fn, a) {
           distance_dict[i] = b;
         }
         //console.log(distance_dict);
-        //return min distance from dic
+        {
+          /* return min distance from dictionary */
+        }
         min_value = Object.keys(distance_dict).reduce(function (a, b) {
           return distance_dict[a][0] < distance_dict[b][0] ? a : b;
         });
@@ -61,7 +69,9 @@ router.post("/generateTask", async (req, res) => {
   const dcList = await DriverCustomerList.findOne({
     driver: req.body.driverID,
   });
-  //find driver location
+  {
+    /* find driver location */
+  }
   const driver = await User.findOne({ _id: dcList.driver });
   const street = driver.street;
   const city = driver.city;
@@ -69,7 +79,9 @@ router.post("/generateTask", async (req, res) => {
   const country = driver.country;
   const driver_location = street + "," + city + "," + zip + "," + country;
 
-  //Get user location associated with the driver
+  {
+    /* Get user location associated with the driver */
+  }
   const users = dcList.customers;
   user_location = [];
   for (i = 0; i < users.length; i++) {
@@ -89,7 +101,9 @@ router.post("/generateTask", async (req, res) => {
     await task.save();
   }
 
-  //find optimal routes and store it in task collection
+  {
+    /* find optimal routes and store it in task collection */
+  }
   get_nearest_location(
     driver_location,
     user_location,
@@ -158,7 +172,9 @@ router.get("/getSchedule", auth, async (req, res) => {
     }
   }
   var time = 0;
-  //Find driver location to estimate time
+  {
+    /* Find driver location to estimate time */
+  }
   object1 = await Location.find();
   driver_location = object1[0].current_location;
   driver_index = 0;
@@ -195,6 +211,7 @@ router.get("/getSchedule", auth, async (req, res) => {
 
 router.post("/updateDriverLocation", auth, async (req, res) => {
   task_list = await Task.find({ driver: req.user._id });
+
   //console.log(task_list);
   const path_list = task_list[0].path;
   //console.log(path_list);
@@ -206,8 +223,13 @@ router.post("/updateDriverLocation", auth, async (req, res) => {
       const new_driver = new Location({ driver: req.user._id });
       await new_driver.save();
     }
-    //starting location for a driver is location they use during sign up.
-    // In other words, it can be their home address.
+    {
+      /* 
+      starting location for a driver is location they use during sign up.
+      In other words, it can be their home address.
+    */
+    }
+
     const temp_driver = await User.findOne({ _id: req.user._id });
     const street = temp_driver.street;
     const city = temp_driver.city;

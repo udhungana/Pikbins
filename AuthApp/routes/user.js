@@ -10,6 +10,8 @@ const User = require("../model/user");
  * @description - User SignUp
  */
 
+
+ {/* creates new user */}
 router.post("/signup", validator.validateMeChecks, async (req, res) => {
   console.log(req.body);
   const errors = validationResult(req).formatWith(validator.errorFormatter);
@@ -48,6 +50,7 @@ router.post("/signup", validator.validateMeChecks, async (req, res) => {
   }
 });
 
+{/* login route */}
 router.post("/login", async (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
@@ -74,6 +77,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+{/* logout route */}
 router.post("/logout", auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
