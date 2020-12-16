@@ -38,7 +38,6 @@ const Home = () => {
   const [dashboardClicked, setDashboardClicked] = useState(0);
 
   useEffect(() => {
-
     var today = new Date(),
       date =
         today.getFullYear() +
@@ -97,7 +96,7 @@ const Home = () => {
   };
 
   const onDashboardClicked = () => {
-    setDashboardClicked(dashboardClicked => dashboardClicked + 1)
+    setDashboardClicked((dashboardClicked) => dashboardClicked + 1);
   };
 
   const toggle = () => setIsOpen(!isOpen);
@@ -130,9 +129,7 @@ const Home = () => {
                   <DropdownItem style={{ color: "green" }}>
                     Contacts
                   </DropdownItem>
-                  <DropdownItem style={{ color: "green" }}>
-                    About
-                  </DropdownItem>
+                  <DropdownItem style={{ color: "green" }}>About</DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem style={{ color: "red" }}>Help</DropdownItem>
                 </DropdownMenu>
@@ -185,7 +182,7 @@ const Home = () => {
                   fontWeight: "bold",
                 }}
               >
-                <CardText>Time:</CardText>
+                <CardText>ETA:</CardText>
                 <CardText style={{ marginLeft: 60 }}>{time}</CardText>
               </div>
               <div
@@ -203,10 +200,10 @@ const Home = () => {
         </div>
         <p style={{ color: "green", fontWeight: "bold" }}>
           Missed Your Pickup?Don't Worry
-          </p>
+        </p>
         <p style={{ color: "green", fontWeight: "bold" }}>
           Just Send us Pickup Request
-          </p>
+        </p>
         {/* <Button color="success">Request Again</Button> */}
       </div>
     </>

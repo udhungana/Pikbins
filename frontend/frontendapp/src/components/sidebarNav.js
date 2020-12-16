@@ -11,6 +11,7 @@ import {
   faTruck,
   faList,
   faClipboardList,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideBarNav = () => {
@@ -51,6 +52,13 @@ const SideBarNav = () => {
           Assigned List
         </NavLink>
       </NavItem>
+      <NavItem>
+        <NavLink href="/adminAddUser" style={textStl}>
+          <FontAwesomeIcon icon={faUserPlus} />
+          {"   "}
+          Add New Driver
+        </NavLink>
+      </NavItem>
     </Nav>
   );
 };
@@ -78,7 +86,6 @@ const navDesign = {
   justifyContent: "left",
   alignItems: "flex-start",
   width: 200,
-  height: 300,
   border: "1px solid #C0C0C0",
   backgroundColor: "white",
   marginTop: 0,

@@ -5,3 +5,10 @@
   margin: auto;
   height: 100%;
 }
+.signup-form{
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+}
