@@ -19,6 +19,12 @@ import {
 } from "reactstrap";
 import logo from "../assets/logo.png";
 
+/**
+ * @param {boolean} logout - check status of logout clicked
+ * @param {array} todos - list of task to be completed by driver
+ * @param {cookies} token - create and authenticate session
+ * @param {}
+ */
 function Driver() {
   const [logout, setLogout] = useState(false);
   const [todos, setTodos] = useState([]);
@@ -51,11 +57,8 @@ function Driver() {
   }, [logout, token]);
 
   const deleteItem = (addr) => {
-    //console.log("delete clicked");
-    //console.log(addr);
     setTodos(todos.filter((item) => item.address !== addr));
 
-    //updating location of driver
     axios
       .post(
         "/updateDriverLocation",
@@ -77,22 +80,18 @@ function Driver() {
       <Navbar color="light" light expand="md">
         <NavbarBrand style={{ color: "green" }} href="#">
           <img src={logo} width="30" height="30" />
-            PickBins
-          </NavbarBrand>
+          PickBins
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle style={{ color: "green" }} nav caret>
                 Options
-                </DropdownToggle>
+              </DropdownToggle>
               <DropdownMenu style={{ color: "green" }} right>
-                <DropdownItem style={{ color: "green" }}>
-                  Contacts
-                  </DropdownItem>
-                <DropdownItem style={{ color: "green" }}>
-                  About
-                  </DropdownItem>
+                <DropdownItem style={{ color: "green" }}>Contacts</DropdownItem>
+                <DropdownItem style={{ color: "green" }}>About</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem style={{ color: "red" }}>Help</DropdownItem>
               </DropdownMenu>
@@ -103,8 +102,8 @@ function Driver() {
             onClick={logoutClicked}
           >
             <FontAwesomeIcon icon={faSignOutAlt} />
-              Logout
-            </Button>
+            Logout
+          </Button>
         </Collapse>
       </Navbar>
       <div
@@ -121,8 +120,7 @@ function Driver() {
             style={{
               flex: 0.1,
             }}
-          >
-          </p>
+          ></p>
           {todos.map((todo, index) => (
             <TodoItem
               key={index}

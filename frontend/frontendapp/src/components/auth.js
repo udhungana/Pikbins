@@ -7,6 +7,12 @@ import logo from "../assets/logo.png";
 import axios from "axios";
 import { faTemperatureLow } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * Auth is where the user first lands when they see login screen.
+ * here at first login email and password is asked
+ * after user enters login credential and clicks login button loginclicked() function is triggered
+ */
+
 function Auth() {
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
@@ -26,6 +32,11 @@ function Auth() {
   const [passwordView, setPasswordView] = useState(false);
   const [token, setToken] = useCookies(["mr-token"]);
 
+  /**
+   * Login clicked sends post request to backend using axios with email and password and filters driver or admin from response received from backend.
+   * if isDriver is true user will be navigated to driver screen
+   * and if isAdmin is true user will be navigated to admin screen
+   */
   const loginClicked = () => {
     axios
       .post("/user/login", {
@@ -52,7 +63,10 @@ function Auth() {
         console.log(err);
       });
   };
-
+  /**
+   * registerClicked gets form data validates the form and sends the data to backend to store in database.
+   * then user will be logged in with the credential entered during sign up
+   */
   const registerClicked = () => {
     if (
       first_name === "" &&
@@ -98,6 +112,9 @@ function Auth() {
     }
   };
 
+  /**
+   * use effect checks to give access based on credential entered during login.
+   */
   useEffect(() => {
     if (isDriver == true) {
       if (token["mr-token"]) window.location.href = "/driver";
@@ -106,8 +123,6 @@ function Auth() {
     } else {
       if (token["mr-token"]) window.location.href = "/home";
     }
-    //console.log('token of admin')
-    //console.log(token)
   }, [isDriver, isAdmin, token]);
 
   return (
