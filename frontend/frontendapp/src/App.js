@@ -13,6 +13,10 @@ import AdminAssignedList from "./components/adminAssignedList";
 import BrandHeader from "./components/brandHeader";
 import AddUser from "./components/adminAddUser";
 
+/**
+ * This Function creates routing mechanism to navigate to each of the page required withing the application
+ */
+
 function App() {
   return (
     <div className="App">

@@ -22,6 +22,12 @@ import {
 import logo from "../assets/logo.png";
 import axios from "axios";
 
+/**
+ * This is the home page of the application where therer will be dashboard show
+ * @param {Stores token for sessions } token
+ * @param {}
+ */
+
 const Home = () => {
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
 

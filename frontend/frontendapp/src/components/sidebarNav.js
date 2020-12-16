@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import logo from "../assets/logo.png";
 import axios from "axios";
-// import { Sidenav, Nav, Icon, Button } from "rsuite";
 import { Nav, NavItem, NavLink, Table, Navbar } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +12,10 @@ import {
   faClipboardList,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
+
+/**
+ * Side navigation panel frontend setup which will be used in each of the admin's page. This helps to navigate between each of the admin's page.
+ */
 
 const SideBarNav = () => {
   return (
