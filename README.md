@@ -1,1 +1,1 @@
-# NepHacks
+# PickBins Web Application
