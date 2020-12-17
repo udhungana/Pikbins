@@ -250,6 +250,34 @@ router.post("/updateDriverLocation", auth, async (req, res) => {
     );
   }
   await doc.save();
+
+  /* update status */
+  // const driver_location = req.body.current_location;
+  // var res = driver_location.split(",");
+  // var driver_address = res[0];
+  // /* find user with given driver_address */
+  // try {
+  //   const findCustomer = await User.findOne({ street: driver_address });
+  //   const hasStatus = await Status.findOne({ customer: findCustomer._id });
+  //   let statusDoc;
+  //   if (!hasStatus) {
+  //     const newStatus = new Status({
+  //       customer: findCustomer._id,
+  //       status: req.body.status,
+  //     });
+  //     await newStatus.save();
+  //   } else {
+  //     statusDoc = await Status.findOneAndUpdate(
+  //       { customer: findCustomer._id },
+  //       { status: req.body.status },
+  //       { new: true }
+  //     );
+  //   }
+  // } catch (e) {
+  //   console.log('hello')
+  //   res.send(e)
+  // }
+
   res.send(doc);
 });
 module.exports = router;
