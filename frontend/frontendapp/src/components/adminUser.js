@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button,
-} from "reactstrap";
-import logo from "../assets/logo.png";
 import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
 
+/**
+ * @param {array} listM - stores all the user info retrieved from backend, which later is displayed using map.
+ */
+
+/**
+ * Adminuser list all the customer's name, email and addressed displayed in card.
+ */
 const AdminUser = () => {
-  const [token, setToken, deleteToken] = useCookies(["mr-token"]);
   const [listM, setlistM] = useState([]);
 
+  /**
+   * gets the customer information from database using axios
+   */
   useEffect(() => {
     axios
       .get("/getCustomer")
@@ -47,8 +33,6 @@ const AdminUser = () => {
       <BrandHeader />
       <div className="row" style={{ display: "flex" }}>
         <SideBarNav />
-
-        {/* add table/other content in each page after this */}
 
         <div className="row" style={{ flex: 1, marginLeft: 20 }}>
           {listM.map((user, index) => (
@@ -68,7 +52,6 @@ const AdminUser = () => {
               </ListGroupItem>
             </ListGroup>
           ))}
-          {/* add table/other content in each page  upto here */}
         </div>
       </div>
     </div>

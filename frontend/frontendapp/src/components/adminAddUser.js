@@ -33,6 +33,11 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
 
+/**
+ *This page lets admin add new driver to the list of drivers using form
+ *After the form is submitted registerClicked to trigerred which will post the form data to the backend.
+ */
+
 const AddUser = () => {
   const [first_name, setFirstname] = useState("");
   const [last_name, setLastname] = useState("");
@@ -51,18 +56,9 @@ const AddUser = () => {
   const [passwordView, setPasswordView] = useState(false);
   const [token, setToken] = useCookies(["mr-token"]);
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("/getCustomer")
-  //       .then((response) => {
-  //         setlistM(response.data);
-  //         console.log(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }, []);
-
+  /**
+   * this function sends the form data to backend to store a new driver in the database.
+   */
   const registerClicked = () => {
     if (
       first_name === "" &&
@@ -113,8 +109,6 @@ const AddUser = () => {
       <BrandHeader />
       <div className="row" style={{ display: "flex" }}>
         <SideBarNav />
-
-        {/* add table/other content in each page after this */}
 
         <Form className="signup-form">
           <div>

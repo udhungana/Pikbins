@@ -14,7 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * Side navigation panel frontend setup which will be used in each of the admin's page. This helps to navigate between each of the admin's page.
+ * Side navigation panel frontend setup which will be used in each of the admin's page.
+ * This helps to navigate between each of the admin's page.
  */
 
 const SideBarNav = () => {

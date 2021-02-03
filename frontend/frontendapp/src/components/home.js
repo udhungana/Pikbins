@@ -23,7 +23,7 @@ import logo from "../assets/logo.png";
 import axios from "axios";
 
 /**
- * This is the home page of the application where therer will be dashboard show
+ * This is the home page of the application where therer will be dashboard shown
  * @param {Stores token for sessions } token
  * @param {for toggling options} isOpen
  * @param {Save date to show in dashboard card} date
@@ -209,12 +209,6 @@ const Home = () => {
             </CardBody>
           </Card>
         </div>
-        <p style={{ color: "green", fontWeight: "bold" }}>
-          Missed Your Pickup?Don't Worry
-        </p>
-        <p style={{ color: "green", fontWeight: "bold" }}>
-          Just Send us Pickup Request
-        </p>
       </div>
     </>
   );

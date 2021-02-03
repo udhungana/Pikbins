@@ -1,43 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import logo from "../assets/logo.png";
 import axios from "axios";
-// import { Sidenav, Nav, Icon, Button } from "rsuite";
 import { Nav, NavItem, NavLink, Table } from "reactstrap";
-import Divider from "@material-ui/core/Divider";
-import Icon from "@material-ui/core/Icon";
-import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
-function AdminHome() {
 
+/**
+ * @param {array} mappableFields - stores all driver's information retrieved from backend
+ */
+/**
+ * Admin Home shows information of a driver, its assigned address, and pickup status in each row of table for all driver.
+ */
+function AdminHome() {
   const [mappableFields, setMappableFields] = useState([]);
 
+  /**
+   * retrives drivers information from backend, and stores in mappableFields.
+   */
   useEffect(() => {
     axios
       .get("/getDriver")
       .then((response) => {
-        console.log(response)
-        setMappableFields(response.data)
+        console.log(response);
+        setMappableFields(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  // const adminUserClicked = () => {
-  //   console.log("hello");
-  //   axios.get("/getCustomer").then((response) => {
-  //     console.log(response);
-  //   });
-  // };
-
   return (
     <div>
       <BrandHeader />
       <div className="row">
         <SideBarNav />
-        {/* add table/other content in each page after this */}
         <Table
           striped
           style={{
@@ -59,8 +54,10 @@ function AdminHome() {
             {mappableFields.map((d, index) => (
               <tr key={index}>
                 <td>{d.street}</td>
-                <td>{d.fName} {d.lName}</td>
-                <td>0</td>
+                <td>
+                  {d.fName} {d.lName}
+                </td>
+                <td>pending</td>
               </tr>
             ))}
           </tbody>

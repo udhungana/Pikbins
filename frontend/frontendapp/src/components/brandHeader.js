@@ -5,29 +5,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 
-const BrandHeader = () => {
+/**
+ * this is a templete function used in all admin screen used in side navigation.
+ * Header with pickbins logo and logout button is added by each admin options.
+ */
 
+const BrandHeader = () => {
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
-  //const [out, setOut] = useState(false)
+
   const logoutClicked = () => {
     deleteToken(["mr-token"]);
-    //setOut(true)
   };
 
   useEffect(() => {
-    //console.log(token);
     if (!token["mr-token"]) window.location.href = "/";
-    //this reroute needed token for this
-    // if (out) {
-    //   window.location.href = "/";
-    // }
   }, [token]);
 
   return (
     <div className="row">
       <p
         style={{
-          // borderBottom: "5px solid green",
           borderRight: "1px solid #C0C0C0",
           marginBottom: 0,
           height: 80,
@@ -56,7 +53,10 @@ const BrandHeader = () => {
           marginTop: 5,
         }}
       >
-        <Button style={{ color: "red", backgroundColor: "white" }} onClick={logoutClicked}>
+        <Button
+          style={{ color: "red", backgroundColor: "white" }}
+          onClick={logoutClicked}
+        >
           <FontAwesomeIcon icon={faSignOutAlt} />
           Logout
         </Button>

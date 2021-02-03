@@ -22,62 +22,18 @@ import {
   Button,
   Table,
 } from "reactstrap";
-import logo from "../assets/logo.png";
 import axios from "axios";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import SideBarNav from "./sidebarNav";
 import BrandHeader from "./brandHeader";
 
-function AdminGenerateList() {
-  // var array = [
-  //   {
-  //     driver: "Utsav",
-  //     addresses: [
-  //       "1001 courtside dr.",
-  //       "2000 fine st.",
-  //       "300 line rd.",
-  //       "400 count dr.",
-  //     ],
-  //   },
-  //   {
-  //     driver: "Himal",
-  //     addresses: [
-  //       "700 side dr.",
-  //       "1000 wine st.",
-  //       "400 blue rd.",
-  //       "500 counter dr.",
-  //     ],
-  //   },
-  //   {
-  //     driver: "Bipul",
-  //     addresses: [
-  //       "1213 code dr.",
-  //       "1500 shine st.",
-  //       "9000 vine rd.",
-  //       "800 perma dr.",
-  //     ],
-  //   },
-  //   {
-  //     driver: "Suyash",
-  //     addresses: [
-  //       "109 square dr.",
-  //       "101 hike st.",
-  //       "3001 fire rd.",
-  //       "990 shout dr.",
-  //     ],
-  //   },
-  //   {
-  //     driver: "Pujan",
-  //     addresses: [
-  //       "1114 faun dr.",
-  //       "2113 longstaff st.",
-  //       "762 Never rd.",
-  //       "454 last dr.",
-  //     ],
-  //   },
-  // ];
-  //const [listM, setlistM] = useState([]);
+/**
+ * Admin Generate List generate the optimal path to take to go to each address of customer to pickup waste.
+ * After finishing catagorizing the list using assigned list tab, this function creates task list for driver to finish.
+ *
+ */
 
+function AdminGenerateList() {
   const [showTask, setShowTask] = useState(false);
   const [generatedDriver, setGeneratedDriver] = useState([]);
   const [containsAlready, setContainsAlready] = useState(false);
@@ -86,25 +42,34 @@ function AdminGenerateList() {
 
   const [dlist, setDlist] = useState([]);
   const [ulist, setUlist] = useState([]);
-  const [generatedClicked, setGeneratedClicked] = useState(false)
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
+  const [generatedClicked, setGeneratedClicked] = useState(false);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
 
+  /**
+   *
+   * @param {token} driverID
+   * @param {string} first
+   * @param {string} last
+   */
+  /**
+   *
+   * Generates
+   */
   const generateTasks = (driverID, first, last) => {
-
-    setFirst(first)
-    setLast(last)
-    console.log('driver id')
-    console.log(driverID)
-    console.log('driver first')
-    console.log(first)
-    console.log('driver last')
-    console.log(last)
+    setFirst(first);
+    setLast(last);
+    console.log("driver id");
+    console.log(driverID);
+    console.log("driver first");
+    console.log(first);
+    console.log("driver last");
+    console.log(last);
     axios
       .post("/generateTask", { driverID: driverID })
       .then((response) => {
-        console.log(response.data.path)
-        setUlist(response.data.path)
+        console.log(response.data.path);
+        setUlist(response.data.path);
       })
       .catch((error) => {
         console.log(error);
@@ -140,8 +105,8 @@ function AdminGenerateList() {
     axios
       .get("/getDriver")
       .then((response) => {
-        console.log(response)
-        setDlist(response.data)
+        console.log(response);
+        setDlist(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -153,7 +118,6 @@ function AdminGenerateList() {
       <BrandHeader />
       <div className="row">
         <SideBarNav />
-        {/* add table/other content in each page after this */}
         <Table
           striped
           style={{
@@ -173,12 +137,13 @@ function AdminGenerateList() {
           <tbody>
             {dlist.map((d, index) => (
               <tr key={index}>
-                <td>{d.fName} {d.lName}</td>
+                <td>
+                  {d.fName} {d.lName}
+                </td>
                 <td>
                   <Button
                     color="success"
                     style={{ margin: 0 }}
-                    //disabled={notDisabled[index] ? true : false}
                     onClick={() => generateTasks(d._id, d.fName, d.lName)}
                   >
                     GenerateTask
@@ -188,7 +153,6 @@ function AdminGenerateList() {
             ))}
           </tbody>
         </Table>
-        {/* add table/other content in each page  upto here */}
       </div>
       <div>
         {generatedClicked ? (
@@ -204,7 +168,9 @@ function AdminGenerateList() {
           >
             <thead>
               <tr>
-                <th>Optimal list of {first} {last}</th>
+                <th>
+                  Optimal list of {first} {last}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -222,8 +188,8 @@ function AdminGenerateList() {
 }
 export default AdminGenerateList;
 
-
-{/* <div className="mbsc-grid" style={{ marginLeft: 190 }}>
+{
+  /* <div className="mbsc-grid" style={{ marginLeft: 190 }}>
         {showTask ? (
           <div className="row">
             {generatedDriver.map((data) => {
@@ -257,4 +223,5 @@ export default AdminGenerateList;
             })}
           </div>
         ) : null}
-      </div> */}
+      </div> */
+}

@@ -5,7 +5,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 /**
  *
- * This function lists the items to display for drivers tasks along with a button to click after fininshing each task
+ * This function lists the items to display for drivers tasks
+ * along with a button to click after fininshing each task
  */
 function TodoItem(props) {
   return (

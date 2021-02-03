@@ -23,7 +23,12 @@ import logo from "../assets/logo.png";
  * @param {boolean} logout - check status of logout clicked
  * @param {array} todos - list of task to be completed by driver
  * @param {cookies} token - create and authenticate session
- * @param {}
+ * @param {boolean} isOpen - use to toggle between options
+ *
+ */
+/**
+ * Driver function gets all the task needed to be completed by driver logged in from backend and
+ * shows in user inteface as todo list along with delete button to clear completed task
  */
 function Driver() {
   const [logout, setLogout] = useState(false);
@@ -31,6 +36,9 @@ function Driver() {
   const [token, setToken, deleteToken] = useCookies(["mr-token"]);
   const [isOpen, setIsOpen] = useState(false);
 
+  /**
+   * logoutClicked logs out user and clears token.
+   */
   const logoutClicked = () => {
     deleteToken(["mr-token"]);
     setLogout(true);
@@ -56,6 +64,10 @@ function Driver() {
     }
   }, [logout, token]);
 
+  /**
+   *
+   * Deletes a task from todo list and updates the new list.
+   */
   const deleteItem = (addr) => {
     setTodos(todos.filter((item) => item.address !== addr));
 
